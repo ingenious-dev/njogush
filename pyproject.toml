@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "njogush"
+version = "0.1.0"
+description = ""
+authors = ["ingenious developer <72666669+ingenious-dev@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11"
+Django = "^4.0.3"
+django-cors-headers = "^3.11.0"
+djangorestframework = "^3.13.1"
+Pillow = "^9.1.0"
+channels = {extras = ["daphne"], version = "^4.0.0"}
+pyinstaller = "5.4.1"
+art = "^6.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,17 @@
+// TODO https://code.visualstudio.com/docs/python/debugging#_django
+// TODO https://code.visualstudio.com/docs/python/debugging#_debugging-specific-app-types
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Development",
+        "request": "launch",
+        "type": "python",
+        "program": "${workspaceFolder}/manage.py",
+        "args": ["runserver", "0.0.0.0:6564"],
+        "django": true
+      },
+    ],
+    "compounds": []
+  }
+  

@@ -1,0 +1,140 @@
+pyinstaller myscript.py --distpath dist\windows --name njogush --icon build.png 
+
+
+1670 INFO: PyInstaller: 5.4.1
+1671 INFO: Python: 3.8.10
+1737 INFO: Platform: Windows-10-10.0.22000-SP0
+1739 INFO: wrote E:\Software Development\Projects\ingenious\INTERNAL\njogush\njogush.spec
+1753 INFO: UPX is not available.
+1786 INFO: Extending PYTHONPATH with paths
+['E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush']
+2926 INFO: checking Analysis
+2927 INFO: Building Analysis because Analysis-00.toc is non existent
+2927 INFO: Initializing module dependency graph...
+2931 INFO: Caching module graph hooks...
+2992 INFO: Analyzing base_library.zip ...
+8260 INFO: Loading module hook 'hook-heapq.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+8557 INFO: Loading module hook 'hook-encodings.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+10712 INFO: Loading module hook 'hook-pickle.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+12358 INFO: Caching module dependency graph...
+12575 INFO: running Analysis Analysis-00.toc
+12601 INFO: Adding Microsoft.Windows.Common-Controls to dependent assemblies of final executable
+  required by D:\Users\suhud\AppData\Local\Programs\Python\Python38\python.exe
+13054 INFO: Analyzing E:\Software Development\Projects\ingenious\INTERNAL\njogush\myscript.py
+13073 INFO: Loading module hook 'hook-django.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+1576 WARNING: Failed to collect submodules for 'django.contrib.postgres.forms' because importing 'django.contrib.postgres.forms' raised: ModuleNotFoundError: No module named 'psycopg2'
+20570 INFO: Determining a mapping of distributions to packages...
+24912 WARNING: Unable to find package for requirement backports.zoneinfo from package django.
+24913 INFO: Packages required by django:
+['asgiref', 'sqlparse', 'tzdata']
+24915 INFO: Django root directory E:\Software Development\Projects\ingenious\INTERNAL\njogush\njogush
+1530 WARNING: Failed to collect submodules for 'rest_framework.schemas' because importing 'rest_framework.schemas' raised: django.core.exceptions.ImproperlyConfigured: Requested setting REST_FRAMEWORK, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+72352 INFO: Collecting Django migration scripts.
+73349 INFO: Loading module hook 'hook-multiprocessing.util.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+73667 INFO: Loading module hook 'hook-xml.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+74732 INFO: Loading module hook 'hook-backports.zoneinfo.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\_pyinstaller_hooks_contrib\\hooks\\stdhooks'...
+74843 INFO: Loading module hook 'hook-pytz.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+75182 INFO: Loading module hook 'hook-pkg_resources.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+76703 INFO: Loading module hook 'hook-platform.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+76812 INFO: Loading module hook 'hook-sysconfig.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+76927 INFO: Loading module hook 'hook-difflib.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+78337 INFO: Loading module hook 'hook-django.core.cache.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+79733 INFO: Loading module hook 'hook-django.core.mail.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+79842 INFO: Loading module hook 'hook-django.core.management.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+81546 INFO: Loading module hook 'hook-django.db.backends.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+82726 INFO: Loading module hook 'hook-PIL.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+82879 INFO: Loading module hook 'hook-PIL.Image.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+83968 INFO: Loading module hook 'hook-pycparser.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\_pyinstaller_hooks_contrib\\hooks\\stdhooks'...
+84726 INFO: Loading module hook 'hook-setuptools.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+87593 INFO: Processing pre-find module path hook distutils from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path\\hook-distutils.py'.
+88156 INFO: Loading module hook 'hook-distutils.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+88288 INFO: Loading module hook 'hook-distutils.util.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+89351 INFO: Processing pre-find module path hook site from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path\\hook-site.py'.
+89353 INFO: site: retargeting to fake-dir 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\fake-modules'
+90000 INFO: Loading module hook 'hook-PIL.ImageFilter.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+91435 INFO: Processing module hooks...
+91454 INFO: Loading module hook 'hook-tzdata.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\_pyinstaller_hooks_contrib\\hooks\\stdhooks'...
+94111 INFO: Loading module hook 'hook-xml.dom.domreg.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+94777 INFO: Loading module hook 'hook-django.db.backends.mysql.base.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+94929 INFO: Loading module hook 'hook-django.db.backends.oracle.base.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+95162 INFO: Loading module hook 'hook-sqlite3.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+96162 WARNING: Hidden import "django.db.backends.__pycache__.base" not found!
+99375 INFO: Loading module hook 'hook-django.contrib.sessions.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+100872 INFO: Loading module hook 'hook-django.template.loaders.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+102501 INFO: Loading module hook 'hook-zope.interface.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+102950 INFO: Loading module hook 'hook-cryptography.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\_pyinstaller_hooks_contrib\\hooks\\stdhooks'...
+110135 WARNING: Hidden import "chat.templatetags" not found!
+110213 WARNING: Hidden import "django.contrib.sessions.context_processors" not found!
+110215 WARNING: Hidden import "django.contrib.staticfiles.templatetags" not found!
+110221 WARNING: Hidden import "django.contrib.contenttypes.context_processors" not found!
+110256 WARNING: Hidden import "django.contrib.admin.context_processors" not found!
+110263 WARNING: Hidden import "django.contrib.auth.templatetags" not found!
+110300 WARNING: Hidden import "daphne.context_processors" not found!
+110308 WARNING: Hidden import "django.contrib.contenttypes.templatetags" not found!
+110312 WARNING: Hidden import "django.contrib.messages.templatetags" not found!
+110313 WARNING: Hidden import "daphne.templatetags" not found!
+110556 WARNING: Hidden import "corsheaders.templatetags" not found!
+110578 WARNING: Hidden import "build_tool.context_processors" not found!
+110580 WARNING: Hidden import "django.contrib.sessions.templatetags" not found!
+110616 WARNING: Hidden import "build_tool.templatetags" not found!
+110643 WARNING: Hidden import "django.contrib.staticfiles.context_processors" not found!
+110645 WARNING: Hidden import "rest_framework.context_processors" not found!
+110648 WARNING: Hidden import "chat.context_processors" not found!
+110795 WARNING: Hidden import "corsheaders.context_processors" not found!
+111143 INFO: Loading module hook 'hook-PIL.SpiderImagePlugin.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+111720 INFO: Loading module hook 'hook-setuptools.msvc.py' from 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks'...
+112725 WARNING: Hidden import "django.db.backends.oracle.compiler" not found!
+112926 INFO: Looking for ctypes DLLs
+113012 INFO: Analyzing run-time hooks ...
+113030 INFO: Including run-time hook 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_subprocess.py'
+113033 INFO: Including run-time hook 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_multiprocessing.py'
+113037 INFO: Including run-time hook 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_pkgres.py'
+113058 INFO: Including run-time hook 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_setuptools.py'
+113063 INFO: Including run-time hook 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_inspect.py'
+113072 INFO: Including run-time hook 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_django.py'
+113095 INFO: Including run-time hook 'E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_pkgutil.py'
+113226 INFO: Looking for dynamic libraries
+  File "E:\Software Development\Projects\ingenious\INTERNAL\njogush\venv\njogush-JHqgHMML-py3.8\lib\site-packages\autobahn\xbr\__init__.py", line 38, in <module>
+    from mnemonic import Mnemonic
+No module named 'mnemonic'2595 INFO: Extra DLL search directories (AddDllDirectory): []
+2596 INFO: Extra DLL search directories (PATH): ['E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\venv\\njogush-JHqgHMML-py3.8\\Scripts', 'C:\\Users\\suhud\\Downloads\\mod_spatialite-5.1.0-win-amd64\\', 'C:\\Program Files\\Common Files\\Siemens\\Automation\\Simatic OAM\\bin', 'D:\\VulkanSDK\\1.3.216.0\\Bin', 'D:\\Program Files (x86)\\VMware\\VMware Player\\bin\\', 'C:\\Windows\\system32', 'C:\\Windows', 'C:\\Windows\\System32\\Wbem', 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\', 'C:\\Windows\\System32\\OpenSSH\\', 'D:\\Program Files\\Git\\Git\\cmd', 'D:\\Program Files\\nodejs\\', 'C:\\ProgramData\\ComposerSetup\\bin', 'D:\\Program Files\\Graphviz\\bin', 'D:\\Program Files\\Go\\bin', 'C:\\ProgramData\\chocolatey\\bin', 'D:\\Program Files\\TortoiseSVN\\bin', 'D:\\Program Files\\CMake\\bin', 'D:\\Program Files\\NetMake\\v9-php81\\components\\php', 'D:\\Program Files\\NetMake\\v9-php81\\components\\php', 'DD:\\TDM-GCC-64\\bin', 'DD:\\Program Files\\LLVM\\bin', 'C:\\Users\\suhud\\.cargo\\bin', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Python\\Python38\\Scripts\\', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Python\\Python38\\', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Python\\Python310\\', 'C:\\Users\\suhud\\AppData\\Local\\Microsoft\\WindowsApps', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Microsoft VS Code\\bin', 'C:\\Users\\suhud\\AppData\\Roaming\\npm', 'D:\\src\\flutter\\bin', 'D:\\src\\flutter_2.10.5\\bin', 'D:\\Program Files\\JetBrains\\PhpStorm 2022.1.2\\bin', 'C:\\Users\\suhud\\AppData\\Roaming\\Composer\\vendor\\bin', 'D:\\Users\\suhud\\AppData\\Local\\Android\\Sdk\\platform-tools', 'C:\\Users\\suhud\\AppData\\Local\\GitHubDesktop\\bin', 'D:\\Program Files\\Haulmont\\CUBA Studio 2020.2\\bin', 'D:\\ngrok-v3-stable-windows-amd64', 'C:\\Users\\suhud\\go\\bin', 'D:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.2\\bin', 'D:\\cygwin64\\bin', 'D:\\Program Files\\PostgreSQL\\14\\bin', 'D:\\mongosh-1.6.2-win32-x64\\bin', 'D:\\xampp_PHP8.2\\php', 'D:\\xampp\\php', 'D:\\php\\7.4.30', 'D:\\xampp_PHP8.2\\mysql\\bin', 'D:\\xampp\\mysql\\bin', 'C:\\tools\\dart-sdk\\bin', 'C:\\Users\\suhud\\AppData\\Roaming\\Pub\\Cache\\bin', 'D:\\OSGeo4W\\bin', 'C:\\Users\\suhud\\AppData\\Roaming\\Python\\Scripts', 'C:\\Users\\suhud\\.cargo\\bin', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Python\\Python38\\Scripts\\', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Python\\Python38\\', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Python\\Python310\\', 'C:\\Users\\suhud\\AppData\\Local\\Microsoft\\WindowsApps', 'C:\\Users\\suhud\\AppData\\Roaming\\npm', 'D:\\src\\flutter\\bin', 'D:\\src\\flutter_2.10.5\\bin', 'D:\\Program Files\\JetBrains\\PhpStorm 2022.1.2\\bin', 'C:\\Users\\suhud\\AppData\\Roaming\\Composer\\vendor\\bin', 'D:\\Program Files\\Graphviz\\bin', 'D:\\Users\\suhud\\AppData\\Local\\Android\\Sdk\\platform-tools', 'C:\\Users\\suhud\\AppData\\Local\\GitHubDesktop\\bin', 'D:\\Program Files\\Haulmont\\CUBA Studio 2020.2\\bin', 'D:\\ngrok-v3-stable-windows-amd64', 'C:\\Users\\suhud\\go\\bin', 'D:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.2\\bin', 'D:\\cygwin64\\bin', 'DD:\\TDM-GCC-64\\bin', 'D:\\Program Files\\PostgreSQL\\14\\bin', 'D:\\mongosh-1.6.2-win32-x64\\bin', 'C:\\Users\\suhud\\AppData\\Roaming\\Python\\Scripts', 'D:\\xampp_PHP8.2\\php', 'D:\\xampp\\php', 'D:\\php\\7.4.30', 'D:\\xampp_PHP8.2\\mysql\\bin', 'D:\\xampp\\mysql\\bin', 'C:\\tools\\dart-sdk\\bin', 'C:\\Users\\suhud\\AppData\\Roaming\\Pub\\Cache\\bin', 'D:\\gradle-8.5\\bin', 'D:\\openjdk-21.0.1_windows-x64_bin\\jdk-21.0.1\\bin', 'C:\\Program Files\\Common Files\\Oracle\\Java\\javapath_TEMP', 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath_TEMP', 'D:\\Program Files\\Eclipse Adoptium\\jdk-11.0.17.8-hotspot\\bin_TEMP', 'D:\\Program Files\\Eclipse Adoptium\\jdk-8.0.352.8-hotspot\\bin_TEMP', 'C:\\Users\\suhud\\.jdks\\corretto-1.8.0_342\\bin_TEMP', 'D:\\apache-maven-3.9.6-bin\\apache-maven-3.9.6\\bin', 'D:\\Users\\suhud\\AppData\\Local\\Programs\\Microsoft VS Code\\bin', 'D:\\Users\\suhud\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin']
+116771 INFO: Looking for eggs
+116773 INFO: Using Python library D:\Users\suhud\AppData\Local\Programs\Python\Python38\python38.dll
+116773 INFO: Found binding redirects:
+[]
+116789 INFO: Warnings written to E:\Software Development\Projects\ingenious\INTERNAL\njogush\build\njogush\warn-njogush.txt
+117246 INFO: Graph cross-reference written to E:\Software Development\Projects\ingenious\INTERNAL\njogush\build\njogush\xref-njogush.html
+117682 INFO: checking PYZ
+117683 INFO: Building PYZ because PYZ-00.toc is non existent
+117684 INFO: Building PYZ (ZlibArchive) E:\Software Development\Projects\ingenious\INTERNAL\njogush\build\njogush\PYZ-00.pyz
+120671 INFO: Building PYZ (ZlibArchive) E:\Software Development\Projects\ingenious\INTERNAL\njogush\build\njogush\PYZ-00.pyz completed successfully.
+120788 INFO: checking PKG
+120789 INFO: Building PKG because PKG-00.toc is non existent
+120789 INFO: Building PKG (CArchive) njogush.pkg
+120837 INFO: Building PKG (CArchive) njogush.pkg completed successfully.
+120849 INFO: Bootloader E:\Software Development\Projects\ingenious\INTERNAL\njogush\venv\njogush-JHqgHMML-py3.8\lib\site-packages\PyInstaller\bootloader\Windows-64bit\run.exe
+120851 INFO: checking EXE
+120852 INFO: Building EXE because EXE-00.toc is non existent
+120852 INFO: Building EXE from EXE-00.toc
+120855 INFO: Copying bootloader EXE to E:\Software Development\Projects\ingenious\INTERNAL\njogush\build\njogush\njogush.exe.notanexecutable
+121017 INFO: Copying icon to EXE
+121305 INFO: Copying icons from ['E:\\Software Development\\Projects\\ingenious\\INTERNAL\\njogush\\build\\njogush\\generated-e867acdcb4f76df495f8da3c0eff13e901ea9aa6770e0a5c588f7401e86878bf.ico']
+121407 INFO: Writing RT_GROUP_ICON 0 resource with 104 bytes
+121408 INFO: Writing RT_ICON 1 resource with 842 bytes
+121409 INFO: Writing RT_ICON 2 resource with 1510 bytes
+121409 INFO: Writing RT_ICON 3 resource with 2160 bytes
+121410 INFO: Writing RT_ICON 4 resource with 3521 bytes
+121410 INFO: Writing RT_ICON 5 resource with 5164 bytes
+121411 INFO: Writing RT_ICON 6 resource with 10206 bytes
+121411 INFO: Writing RT_ICON 7 resource with 19627 bytes
+121415 INFO: Copying 0 resources to EXE
+121416 INFO: Embedding manifest in EXE
+121420 INFO: Updating manifest in E:\Software Development\Projects\ingenious\INTERNAL\njogush\build\njogush\njogush.exe.notanexecutable
+121550 INFO: Updating resource type 24 name 1 language 0
+121568 INFO: Appending PKG archive to EXE
+121626 INFO: Fixing EXE headers
+122002 INFO: Building EXE from EXE-00.toc completed successfully.
+122018 INFO: checking COLLECT
+122019 INFO: Building COLLECT because COLLECT-00.toc is non existent
+122020 INFO: Building COLLECT COLLECT-00.toc
+136217 INFO: Building COLLECT COLLECT-00.toc completed successfully.
