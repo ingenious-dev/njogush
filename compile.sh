@@ -1,7 +1,7 @@
 poetry run python manage.py collectstatic --noinput
 
 rm -rf build
-rm -rf dist
+rm -rf dist/linux
 
 # ? <<<<<<<<>>>>>>>>>>
 # cp venv/njogush-JHqgHMML-py3.8/Lib/site-packages/daphne/management/commands/runserver.py 

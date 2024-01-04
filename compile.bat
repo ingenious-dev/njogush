@@ -1,7 +1,7 @@
 poetry run python manage.py collectstatic --noinput
 
 rmdir /s /q build
-rmdir /s /q dist
+rmdir /s /q dist\windows
 
 @REM ? <<<<<<<<>>>>>>>>>>
 @REM OPTION 1 - hardcoding location of daphne
