@@ -21,7 +21,7 @@ pyinstaller myscript.py --distpath dist/linux --name njogush --icon build.png
 cp -r static dist/linux/njogush
 cp build.png dist/linux/njogush
 # TODO https://stackoverflow.com/questions/947954/how-to-have-the-cp-command-create-any-necessary-folders-for-copying-a-file-to-a/14085147#14085147
-mkdir dist/linux/njogush/build_tool/templates/build_tool_vue
+mkdir -p dist/linux/njogush/build_tool/templates/build_tool_vue
 cp -r build_tool/templates/build_tool_vue/dist dist/linux/njogush/build_tool/templates/build_tool_vue/dist
 
 
