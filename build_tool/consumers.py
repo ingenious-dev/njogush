@@ -153,7 +153,15 @@ class BuildConsumer(WebsocketConsumer):
                 stdout += completed.stdout
                 stderr += completed.stderr
 
-                completed = subprocess.run(["cp", step.asset.file.path, step.file_path], capture_output=True, text=True, shell=True)
+                if platform == "linux" or platform == "linux2":
+                    # linux
+                    completed = subprocess.run(["cp", step.asset.file.path, step.file_path], capture_output=True, text=True, shell=True)
+                elif platform == "darwin":
+                    # OS X
+                    completed = subprocess.run(["cp", step.asset.file.path, step.file_path], capture_output=True, text=True, shell=True)
+                elif platform == "win32":
+                    completed = subprocess.run(["copy", step.asset.file.path, step.file_path], capture_output=True, text=True, shell=True)
+
                 stdout += completed.stdout
                 stderr += completed.stderr
 
@@ -212,7 +220,15 @@ class BuildConsumer(WebsocketConsumer):
                     
 
                     # STEP 2: Overwrite the orginal & remove the duplicate
-                    completed = subprocess.run(["cp", new_filename, filename], capture_output=True, text=True, shell=True)
+                    if platform == "linux" or platform == "linux2":
+                        # linux
+                        completed = subprocess.run(["cp", new_filename, filename], capture_output=True, text=True, shell=True)
+                    elif platform == "darwin":
+                        # OS X
+                        completed = subprocess.run(["cp", new_filename, filename], capture_output=True, text=True, shell=True)
+                    elif platform == "win32":
+                        completed = subprocess.run(["copy", new_filename, filename], capture_output=True, text=True, shell=True)
+
                     stdout += completed.stdout
                     stderr += completed.stderr
 
@@ -235,7 +251,15 @@ class BuildConsumer(WebsocketConsumer):
                         raise Exception(f'STEP #{step.id}: {str(e)}')
 
                     # STEP 4: Delete the duplicate
-                    completed = subprocess.run(["rm", new_filename], capture_output=True, text=True, shell=True)
+                    if platform == "linux" or platform == "linux2":
+                        # linux
+                        completed = subprocess.run(["rm", new_filename], capture_output=True, text=True, shell=True)
+                    elif platform == "darwin":
+                        # OS X
+                        completed = subprocess.run(["rm", new_filename], capture_output=True, text=True, shell=True)
+                    elif platform == "win32":
+                        completed = subprocess.run(["del", new_filename], capture_output=True, text=True, shell=True)
+                    
                     stdout += completed.stdout
                     stderr += completed.stderr
 
