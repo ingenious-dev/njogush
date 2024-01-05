@@ -347,6 +347,7 @@ import { Switch, SwitchDescription, SwitchGroup, SwitchLabel } from '@headlessui
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 import AssetsView from './AssetsView.vue'
 import StepsView from './StepsView.vue'
+import { getBaseUrl } from '../network/network_info'
 
 export default {
   components: {
@@ -505,10 +506,10 @@ export default {
       //     + '/'
       // );
 
-      // OPTION 2 - hard code host
+      // OPTION 2
       this.chatSocket = new WebSocket(
           'ws://'
-          + '127.0.0.1:6564'
+          + getBaseUrl()
           + '/ws/build/'
           + roomName
           + '/'

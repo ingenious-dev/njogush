@@ -10,4 +10,5 @@ export {
     NJOGUSH_BASE_URL,
     NJOGUSH_WEBSOCKET_URL,
     NJOGUSH_AUTHORITY,
+    getBaseUrl
 }
