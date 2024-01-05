@@ -75,7 +75,7 @@ Codename:       jammy
 | VueJS | Building the UI/SPA  |
 
 # Warnings
-The setting `REMOTE_MODE = False` prevents the build tool from running projects when accessd remotely. Projects can therefore only be run if the build tool is accessed locally (`127.0.0.1` and `localhost`)
+The setting `REMOTE_MODE = False` prevents the build tool from running projects when accessed remotely. Projects can therefore only be run if the build tool is accessed locally (`127.0.0.1` and `localhost`)
 
 This build tool can run arbitrary commands. While this allows the developer greater control which is limited by other build tools, it is the responsibilty of the developer to ascertain the safety of the executed commands.
 
