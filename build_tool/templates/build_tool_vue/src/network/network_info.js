@@ -3,7 +3,7 @@ const NJOGUSH_WEBSOCKET_URL = `ws://${getBaseUrl()}`;
 const NJOGUSH_AUTHORITY = getBaseUrl();
 
 function getBaseUrl() {
-    return import.meta.env.VITE_BASE_URL ?? ''
+    return import.meta.env.VITE_BASE_URL ?? window.location.host
 }
 
 export {
