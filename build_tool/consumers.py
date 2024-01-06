@@ -37,14 +37,14 @@ class BuildConsumer(WebsocketConsumer):
 
         # TODO https://docs.python.org/3/library/subprocess.html#popen-constructor
         """... If shell is True, it is recommended to pass args as a string rather than as a sequence."""
-        # completed = subprocess.run(step.command, shell=True, capture_output=True, text=True)
+        completed = subprocess.run(step.command, shell=True, capture_output=True, text=True)
 
         """
         Note It may not be obvious how to break a shell command into a sequence of arguments, especially in complex cases.
         shlex.split() can illustrate how to determine the correct tokenization for args:
         """
-        args = shlex.split(step.command)
-        completed = subprocess.run(args, shell=True, capture_output=True, text=True)
+        # args = shlex.split(step.command)
+        # completed = subprocess.run(args, shell=True, capture_output=True, text=True)
 
         stdout = completed.stdout
         stderr = completed.stderr
@@ -124,12 +124,12 @@ class BuildConsumer(WebsocketConsumer):
             if step.category == 'folder':
                 if platform == "linux" or platform == "linux2":
                     # linux
-                    completed = subprocess.run(["mkdir", "-p", step.folder], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"mkdir -p {step.folder}", capture_output=True, text=True, shell=True)
                 elif platform == "darwin":
                     # OS X
-                    completed = subprocess.run(["mkdir", "-p", step.folder], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"mkdir -p {step.folder}", capture_output=True, text=True, shell=True)
                 elif platform == "win32":
-                    completed = subprocess.run(["mkdir", step.folder], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"mkdir {step.folder}", capture_output=True, text=True, shell=True)
                     # Windows...
                 
                 stdout += completed.stdout
@@ -143,24 +143,24 @@ class BuildConsumer(WebsocketConsumer):
 
                 if platform == "linux" or platform == "linux2":
                     # linux
-                    completed = subprocess.run(["mkdir", "-p", dirname], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"mkdir -p {dirname}", capture_output=True, text=True, shell=True)
                 elif platform == "darwin":
                     # OS X
-                    completed = subprocess.run(["mkdir", "-p", dirname], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"mkdir -p {dirname}", capture_output=True, text=True, shell=True)
                 elif platform == "win32":
-                    completed = subprocess.run(["mkdir", dirname], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"mkdir {dirname}", capture_output=True, text=True, shell=True)
 
                 stdout += completed.stdout
                 stderr += completed.stderr
 
                 if platform == "linux" or platform == "linux2":
                     # linux
-                    completed = subprocess.run(["cp", step.asset.file.path, step.file_path], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"cp {step.asset.file.path} {step.file_path}", capture_output=True, text=True, shell=True)
                 elif platform == "darwin":
                     # OS X
-                    completed = subprocess.run(["cp", step.asset.file.path, step.file_path], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"cp {step.asset.file.path} {step.file_path}", capture_output=True, text=True, shell=True)
                 elif platform == "win32":
-                    completed = subprocess.run(["copy", step.asset.file.path, step.file_path], capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f"copy {step.asset.file.path} {step.file_path}", capture_output=True, text=True, shell=True)
 
                 stdout += completed.stdout
                 stderr += completed.stderr
@@ -222,12 +222,12 @@ class BuildConsumer(WebsocketConsumer):
                     # STEP 2: Overwrite the orginal & remove the duplicate
                     if platform == "linux" or platform == "linux2":
                         # linux
-                        completed = subprocess.run(["cp", new_filename, filename], capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f"cp {new_filename} {filename}", capture_output=True, text=True, shell=True)
                     elif platform == "darwin":
                         # OS X
-                        completed = subprocess.run(["cp", new_filename, filename], capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f"cp {new_filename} {filename}", capture_output=True, text=True, shell=True)
                     elif platform == "win32":
-                        completed = subprocess.run(["copy", new_filename, filename], capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f"copy {new_filename} {filename}", capture_output=True, text=True, shell=True)
 
                     stdout += completed.stdout
                     stderr += completed.stderr
@@ -253,12 +253,12 @@ class BuildConsumer(WebsocketConsumer):
                     # STEP 4: Delete the duplicate
                     if platform == "linux" or platform == "linux2":
                         # linux
-                        completed = subprocess.run(["rm", new_filename], capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f"rm {new_filename}", capture_output=True, text=True, shell=True)
                     elif platform == "darwin":
                         # OS X
-                        completed = subprocess.run(["rm", new_filename], capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f"rm {new_filename}", capture_output=True, text=True, shell=True)
                     elif platform == "win32":
-                        completed = subprocess.run(["del", new_filename], capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f"del {new_filename}", capture_output=True, text=True, shell=True)
                     
                     stdout += completed.stdout
                     stderr += completed.stderr
