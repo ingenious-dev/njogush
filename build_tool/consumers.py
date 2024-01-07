@@ -129,7 +129,9 @@ class BuildConsumer(WebsocketConsumer):
                     # OS X
                     completed = subprocess.run(f"mkdir -p {step.folder}", capture_output=True, text=True, shell=True)
                 elif platform == "win32":
-                    completed = subprocess.run(f"mkdir {step.folder}", capture_output=True, text=True, shell=True)
+                    # completed = subprocess.run(f"mkdir {step.folder}", capture_output=True, text=True, shell=True)
+                    # TODO https://stackoverflow.com/questions/4165387/create-folder-with-batch-but-only-if-it-doesnt-already-exist/20688004#20688004
+                    completed = subprocess.run(f'if not exist "{step.folder}\" mkdir {step.folder}', capture_output=True, text=True, shell=True)
                     # Windows...
                 
                 stdout += completed.stdout
@@ -148,7 +150,9 @@ class BuildConsumer(WebsocketConsumer):
                     # OS X
                     completed = subprocess.run(f"mkdir -p {dirname}", capture_output=True, text=True, shell=True)
                 elif platform == "win32":
-                    completed = subprocess.run(f"mkdir {dirname}", capture_output=True, text=True, shell=True)
+                    # completed = subprocess.run(f"" f"mkdir {dirname}", capture_output=True, text=True, shell=True)
+                    # TODO https://stackoverflow.com/questions/4165387/create-folder-with-batch-but-only-if-it-doesnt-already-exist/20688004#20688004
+                    completed = subprocess.run(f'if not exist "{dirname}\" mkdir {dirname}', capture_output=True, text=True, shell=True)
 
                 stdout += completed.stdout
                 stderr += completed.stderr
