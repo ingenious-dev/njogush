@@ -152,7 +152,7 @@ class BuildConsumer(WebsocketConsumer):
                 elif platform == "win32":
                     # completed = subprocess.run(f"" f"mkdir {dirname}", capture_output=True, text=True, shell=True)
                     # TODO https://stackoverflow.com/questions/4165387/create-folder-with-batch-but-only-if-it-doesnt-already-exist/20688004#20688004
-                    completed = subprocess.run(f'if not exist "{dirname}\" "mkdir {dirname}"', capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f'if not exist "{dirname}\" mkdir "{dirname}"', capture_output=True, text=True, shell=True)
 
                 stdout += completed.stdout
                 stderr += completed.stderr
