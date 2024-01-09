@@ -23,4 +23,4 @@ class StepSerializer(serializers.ModelSerializer):
 class BuildSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = BuildSession
-        fields = ['id', 'project', 'logs', 'current_step', 'date_posted']
+        fields = ['id', 'project', 'logs', 'current_step', 'date_posted', 'date_modified']

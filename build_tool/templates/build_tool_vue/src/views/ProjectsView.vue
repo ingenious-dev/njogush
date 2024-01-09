@@ -20,11 +20,11 @@
               <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
 
                 <ul role="list" class="divide-y divide-gray-200">
-                  <li v-for="item in projects" :key="item.id" class="relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-50" @click=" navigate(item.id) ">
-                    <div class="flex justify-between space-x-3">
+                  <li v-for="item in projects" :key="item.id" class="relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-50">
+                    <div class="flex justify-between space-x-3" @click=" navigate(item.id) ">
                       <div class="min-w-0 flex-1">
                         <a href="#" class="block focus:outline-none">
-                          <span class="absolute inset-0" aria-hidden="true" />
+                          <!-- <span class="absolute inset-0" aria-hidden="true" /> -->
                           <p class="truncate text-sm font-medium text-gray-900">{{ item.name }}</p>
                           <p class="truncate text-sm text-gray-500">{{ item.description }}</p>
                         </a>
@@ -34,6 +34,9 @@
                     <!-- <div class="mt-1">
                       <p class="text-sm text-gray-600 line-clamp-2">{{ item.preview }}</p>
                     </div> -->
+                    <div class="mt-1 flex justify-end">
+                      <a href="#" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50" @click="openSideBar(item.id)">Edit</a>
+                    </div>
                   </li>
                 </ul>
                 

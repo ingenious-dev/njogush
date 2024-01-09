@@ -70,7 +70,10 @@ class BuildConsumer(WebsocketConsumer):
         
         stdout = self.thread_outputs['stdout']
         stderr = self.thread_outputs['stderr']
-        self.socket_send(step, stdout, stderr)
+        try:
+            self.socket_send(step, stdout, stderr)
+        except:
+            pass
 
         if index == self.command_count:
             self.send(text_data=json.dumps({"signal": 'finish'}))
@@ -320,8 +323,9 @@ class BuildConsumer(WebsocketConsumer):
                 self.command_count+=1
                 self.thread_sequence[f"{self.command_count}"] = step
 
-                self.command_threads[f"{step.id}"] = threading.Thread(target=self.run_command_non_blocking, args=(step, self.command_count))
-                self.command_threads[f"{step.id}"].start()
+                if not self.command_threads:
+                    self.command_threads[f"{step.id}"] = threading.Thread(target=self.run_command_non_blocking, args=(step, self.command_count))
+                    self.command_threads[f"{step.id}"].start()
 
                 # self.events[f"{step.id}"] = threading.Event()
                 # self.events[f"{step.id}"].wait()

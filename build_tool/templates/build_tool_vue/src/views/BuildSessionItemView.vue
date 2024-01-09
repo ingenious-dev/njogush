@@ -14,7 +14,7 @@
             <h1 class="text-2xl font-bold text-gray-900">#{{ currentBuildSession?.id }}: {{ currentProject?.name }}</h1>
             <p class="text-sm font-medium text-gray-500">
               <!-- Applied for <a href="#" class="text-gray-900">Front End Developer</a> on <time datetime="2020-08-25">August 25, 2020</time> -->
-              Created <time datetime="2020-08-25">{{ $moment(currentBuildSession?.date_posted).format('MMMM D, YYYY') }}</time>
+              Created <time datetime="2020-08-25">{{ $moment(currentBuildSession?.date_posted).format('MMMM D, YYYY, h:mm:ss a') }}</time>
               <!-- Last modified <time datetime="2020-08-25">{{ $moment(currentProject?.date_modified).format('MMMM D, YYYY') }}</time> -->
             </p>
           </div>
@@ -49,7 +49,7 @@
         <div class="space-y-6 lg:col-span-2 lg:col-start-1">
 
             <div>
-              <label for="chat-log" class="block text-sm font-medium text-gray-700">Logs</label>
+              <label for="chat-log" class="block text-sm font-medium text-gray-700">Live Logs</label>
               <div class="mt-1">
                 <textarea id="chat-log" name="chat-log" rows="20" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="" ref="chat_log" disabled />
               </div>
@@ -100,6 +100,19 @@
               </section>
               
             </div>
+      </div>
+
+      <div class="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-1">
+        <div class="space-y-6 lg:col-span-2 lg:col-start-1">
+
+          <div>
+            <label for="chat-log" class="block text-sm font-medium text-gray-700">Previous Logs ({{ $moment(currentBuildSession?.date_modified).format('MMMM D, YYYY, h:mm:ss a') }})</label>
+            <div class="mt-1">
+              <textarea id="chat-log" name="chat-log" rows="20" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="" ref="chat_log" disabled :value="currentBuildSession?.logs" />
+            </div>
+          </div>
+
+        </div>
       </div>
 
     </main>
