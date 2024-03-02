@@ -124,14 +124,14 @@ class BuildConsumer(WebsocketConsumer):
             if step.category == 'folder':
                 if platform == "linux" or platform == "linux2":
                     # linux
-                    completed = subprocess.run(f'mkdir -p "{step.folder}"', capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f'mkdir -p {step.folder}', capture_output=True, text=True, shell=True)
                 elif platform == "darwin":
                     # OS X
-                    completed = subprocess.run(f'mkdir -p "{step.folder}"', capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f'mkdir -p {step.folder}', capture_output=True, text=True, shell=True)
                 elif platform == "win32":
                     # completed = subprocess.run(f"mkdir {step.folder}", capture_output=True, text=True, shell=True)
                     # TODO https://stackoverflow.com/questions/4165387/create-folder-with-batch-but-only-if-it-doesnt-already-exist/20688004#20688004
-                    completed = subprocess.run(f'if not exist "{step.folder}\" mkdir "{step.folder}"', capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f'if not exist {step.folder} mkdir {step.folder}', capture_output=True, text=True, shell=True)
                     # Windows...
                 
                 stdout += completed.stdout
@@ -141,7 +141,10 @@ class BuildConsumer(WebsocketConsumer):
                     stdout += f'STEP #{step.id}: FOLDER {step.folder} CREATED\n\n'
                 
             if step.category == 'file':
-                dirname = os.path.dirname(step.file_path)
+                # os.path.dirname() only removes the lagging quotation
+                # we are deliberatly removing quotation and adding it later to avoid syntax error
+                dirname = os.path.dirname(step.file_path.strip("\""))
+                dirname = dirname
 
                 if platform == "linux" or platform == "linux2":
                     # linux
@@ -152,19 +155,21 @@ class BuildConsumer(WebsocketConsumer):
                 elif platform == "win32":
                     # completed = subprocess.run(f"" f"mkdir {dirname}", capture_output=True, text=True, shell=True)
                     # TODO https://stackoverflow.com/questions/4165387/create-folder-with-batch-but-only-if-it-doesnt-already-exist/20688004#20688004
-                    completed = subprocess.run(f'if not exist "{dirname}\" "mkdir {dirname}"', capture_output=True, text=True, shell=True)
+                    command = f'if not exist "{dirname}" mkdir "{dirname}"'
+                    completed = subprocess.run(command, capture_output=True, text=True, shell=True)
 
                 stdout += completed.stdout
                 stderr += completed.stderr
 
                 if platform == "linux" or platform == "linux2":
                     # linux
-                    completed = subprocess.run(f"cp {step.asset.file.path} {step.file_path}", capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f'cp "{step.asset.file.path}" {step.file_path}', capture_output=True, text=True, shell=True)
                 elif platform == "darwin":
                     # OS X
-                    completed = subprocess.run(f"cp {step.asset.file.path} {step.file_path}", capture_output=True, text=True, shell=True)
+                    completed = subprocess.run(f'cp "{step.asset.file.path}" {step.file_path}', capture_output=True, text=True, shell=True)
                 elif platform == "win32":
-                    completed = subprocess.run(f"copy {step.asset.file.path} {step.file_path}", capture_output=True, text=True, shell=True)
+                    command = f'copy "{step.asset.file.path}" {step.file_path}'
+                    completed = subprocess.run(command, capture_output=True, text=True, shell=True)
 
                 stdout += completed.stdout
                 stderr += completed.stderr
@@ -175,8 +180,8 @@ class BuildConsumer(WebsocketConsumer):
             if step.category == 'excerpt':
                 # TODO https://stackoverflow.com/questions/31261123/insert-text-in-between-file-lines-in-python/31261196#31261196
                 
-                filename = step.file_path
-                new_filename = f'{step.file_path}__new'
+                filename = step.file_path.strip("\"")
+                new_filename = f'{filename}__new'
 
                 try:
                     # STEP 1: Duplicate & clear content between excerpt markers
@@ -226,12 +231,12 @@ class BuildConsumer(WebsocketConsumer):
                     # STEP 2: Overwrite the orginal & remove the duplicate
                     if platform == "linux" or platform == "linux2":
                         # linux
-                        completed = subprocess.run(f"cp {new_filename} {filename}", capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f'cp "{new_filename}" "{filename}"', capture_output=True, text=True, shell=True)
                     elif platform == "darwin":
                         # OS X
-                        completed = subprocess.run(f"cp {new_filename} {filename}", capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f'cp "{new_filename}" "{filename}"', capture_output=True, text=True, shell=True)
                     elif platform == "win32":
-                        completed = subprocess.run(f"copy {new_filename} {filename}", capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f'copy "{new_filename}" "{filename}"', capture_output=True, text=True, shell=True)
 
                     stdout += completed.stdout
                     stderr += completed.stderr
@@ -257,12 +262,12 @@ class BuildConsumer(WebsocketConsumer):
                     # STEP 4: Delete the duplicate
                     if platform == "linux" or platform == "linux2":
                         # linux
-                        completed = subprocess.run(f"rm {new_filename}", capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f'rm "{new_filename}"', capture_output=True, text=True, shell=True)
                     elif platform == "darwin":
                         # OS X
-                        completed = subprocess.run(f"rm {new_filename}", capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f'rm "{new_filename}"', capture_output=True, text=True, shell=True)
                     elif platform == "win32":
-                        completed = subprocess.run(f"del {new_filename}", capture_output=True, text=True, shell=True)
+                        completed = subprocess.run(f'del "{new_filename}"', capture_output=True, text=True, shell=True)
                     
                     stdout += completed.stdout
                     stderr += completed.stderr
