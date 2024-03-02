@@ -32,6 +32,7 @@ class Step(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     rank = models.IntegerField()
+    
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
     # FOLDER
     folder = models.TextField(blank=True)
@@ -44,6 +45,7 @@ class Step(models.Model):
     excerpt_end = models.CharField(max_length=100, blank=True)
     # COMMAND
     command = models.TextField(blank=True)
+
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

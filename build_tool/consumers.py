@@ -19,8 +19,11 @@ class BuildConsumer(WebsocketConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)
         self.command_count = 0
-        self.command_thread = None
-        self.command_process = None
+        self.command_threads = {}
+        self.command_process = {}
+        self.events = {}
+        self.thread_outputs = {}
+        self.thread_sequence = {}
 
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
@@ -61,19 +64,50 @@ class BuildConsumer(WebsocketConsumer):
         """
         ... Additionally, stderr can be STDOUT, which indicates that the stderr data from the applications should be captured into the same file handle as for stdout.
         """
-        self.command_process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        self.send(text_data=json.dumps({"logs": self.command_process.stdout.read().decode()}))
-        # self.send(text_data=json.dumps({"logs": self.command_process.stderr.read().decode()}))
-
-        report_data = {
-            'step': StepSerializer(step).data,
-            'status': 'success'
-        }
-        self.send(text_data=json.dumps({"report": report_data}))
+        self.command_process[f"{step.id}"] = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        self.thread_outputs['stdout'] = self.command_process[f"{step.id}"].stdout.read().decode()
+        self.thread_outputs['stderr'] = self.command_process[f"{step.id}"].stderr.read().decode()
+        
+        stdout = self.thread_outputs['stdout']
+        stderr = self.thread_outputs['stderr']
+        self.socket_send(step, stdout, stderr)
 
         if index == self.command_count:
             self.send(text_data=json.dumps({"signal": 'finish'}))
 
+        next_command_count = index + 1
+        next_step = self.thread_sequence.get(f"{next_command_count}")
+        if next_step:
+            self.run_command_non_blocking(next_step, next_command_count)
+
+    def socket_send(self, step, stdout, stderr, default_status=None):
+        report_data = {
+            'step': StepSerializer(step).data
+        }
+        
+        # <<<<<>>>>
+        if stdout:
+            self.build_session.logs += stdout
+            self.build_session.save()
+            self.send(text_data=json.dumps({"logs": stdout}))
+
+            report_data['status'] = 'success'
+            self.send(text_data=json.dumps({"report": report_data}))
+
+        if stderr:
+            self.build_session.logs += stderr
+            self.build_session.save()
+            self.send(text_data=json.dumps({"logs": stderr}))
+
+            report_data['status'] = 'failure'
+            self.send(text_data=json.dumps({"report": report_data}))
+            # break
+            raise Exception
+        
+        if default_status:
+            report_data['status'] = default_status
+            self.send(text_data=json.dumps({"report": report_data}))
+    
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
@@ -88,9 +122,11 @@ class BuildConsumer(WebsocketConsumer):
         if message == 'stop':
             self.send(text_data=json.dumps({"signal": 'stop'}))
             if self.command_process:
-                self.command_thread = None
-                self.command_process.terminate()
-                self.command_process = None
+                self.command_threads = {}
+                for x, y in self.command_process.items():
+                    # print(x, y)
+                    y.terminate()
+                self.command_process = {}
                 return
 
         project = self.build_session.project
@@ -112,15 +148,14 @@ class BuildConsumer(WebsocketConsumer):
             self.build_session.current_step = step
             self.build_session.save()
 
-            report_data = {
-                'step': StepSerializer(step).data
-            }
-
-            report_data['status'] = 'loading'
-            self.send(text_data=json.dumps({"report": report_data}))
-
             stdout = ''
             stderr = ''
+
+            try:
+                self.socket_send(step, stdout, stderr, 'loading')
+            except:
+                break
+
             if step.category == 'folder':
                 if platform == "linux" or platform == "linux2":
                     # linux
@@ -129,7 +164,7 @@ class BuildConsumer(WebsocketConsumer):
                     # OS X
                     completed = subprocess.run(f'mkdir -p {step.folder}', capture_output=True, text=True, shell=True)
                 elif platform == "win32":
-                    # completed = subprocess.run(f"mkdir {step.folder}", capture_output=True, text=True, shell=True)
+                    # completed = subprocess.run(f'mkdir "{step.folder}"', capture_output=True, text=True, shell=True)
                     # TODO https://stackoverflow.com/questions/4165387/create-folder-with-batch-but-only-if-it-doesnt-already-exist/20688004#20688004
                     completed = subprocess.run(f'if not exist {step.folder} mkdir {step.folder}', capture_output=True, text=True, shell=True)
                     # Windows...
@@ -153,7 +188,7 @@ class BuildConsumer(WebsocketConsumer):
                     # OS X
                     completed = subprocess.run(f'mkdir -p "{dirname}"', capture_output=True, text=True, shell=True)
                 elif platform == "win32":
-                    # completed = subprocess.run(f"" f"mkdir {dirname}", capture_output=True, text=True, shell=True)
+                    # completed = subprocess.run(f'mkdir "{dirname}"', capture_output=True, text=True, shell=True)
                     # TODO https://stackoverflow.com/questions/4165387/create-folder-with-batch-but-only-if-it-doesnt-already-exist/20688004#20688004
                     command = f'if not exist "{dirname}" mkdir "{dirname}"'
                     completed = subprocess.run(command, capture_output=True, text=True, shell=True)
@@ -274,11 +309,10 @@ class BuildConsumer(WebsocketConsumer):
 
                 except Exception as e:
                     stderr += f'{str(e)}\n\n'
-                    self.send(text_data=json.dumps({"logs": stderr}))
-
-                    report_data['status'] = 'failure'
-                    self.send(text_data=json.dumps({"report": report_data}))
-                    break
+                    try:
+                        self.socket_send(step, stdout, stderr)
+                    except:
+                        break
 
                 if not stdout and not stderr:
                     stdout += f'STEP #{step.id}: EXCERPT\n {step.excerpt}\n ADDED\n\n'
@@ -289,26 +323,30 @@ class BuildConsumer(WebsocketConsumer):
 
                 # OPTION 2
                 self.command_count+=1
-                self.command_thread = threading.Thread(target=self.run_command_non_blocking, args=(step, self.command_count))
-                self.command_thread.start()
-                
+                self.thread_sequence[f"{self.command_count}"] = step
+
+                self.command_threads[f"{step.id}"] = threading.Thread(target=self.run_command_non_blocking, args=(step, self.command_count))
+                self.command_threads[f"{step.id}"].start()
+
+                # self.events[f"{step.id}"] = threading.Event()
+                # self.events[f"{step.id}"].wait()
+
+                # thread_output = self.thread_outputs.get(f"{step.id}", {})
+                # if thread_output:
+                #     stdout = thread_output.get('stdout')
+                #     stderr = thread_output.get('stderr')
+
+                #     try:
+                #         self.socket_send(step, stdout, stderr)
+                #     except:
+                #         break
+
+
             # <<<<<>>>>
-            if stdout:
-                self.build_session.logs += stdout
-                self.build_session.save()
-                self.send(text_data=json.dumps({"logs": stdout}))
-
-                report_data['status'] = 'success'
-                self.send(text_data=json.dumps({"report": report_data}))
-
-            if stderr:
-                self.build_session.logs += stderr
-                self.build_session.save()
-                self.send(text_data=json.dumps({"logs": stderr}))
-
-                report_data['status'] = 'failure'
-                self.send(text_data=json.dumps({"report": report_data}))
+            try:
+                self.socket_send(step, stdout, stderr)
+            except:
                 break
         
-        if not self.command_thread:
+        if not self.command_threads:
             self.send(text_data=json.dumps({"signal": 'finish'}))
