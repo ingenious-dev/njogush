@@ -93,8 +93,8 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
                 return Response(build_serializer.data)
             
             if request.data.get('action') == 'reconfigure':
-                resource.assets.delete()
-                resource.steps.delete()
+                Asset.objects.filter(project=resource).delete()
+                Step.objects.filter(project=resource).delete()
                 # resource.build_sessions.delete()
                 # TO BE DONE - which build_session again?
                 # self.build_session.logs = ''
