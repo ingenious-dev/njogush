@@ -5,6 +5,7 @@ from django.db import models
 class Project(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+    identifier = models.CharField(max_length=30, unique=True)
     image = models.ImageField(upload_to='project_pic', null=True, blank=True)
     date_posted = models.DateTimeField(auto_now_add=True)
 
@@ -45,7 +46,8 @@ class Step(models.Model):
     excerpt_end = models.CharField(max_length=100, blank=True)
     # COMMAND
     command = models.TextField(blank=True)
-
+    
+    is_suspended = models.BooleanField(default=False)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

@@ -149,7 +149,11 @@ CORS_ALLOWED_ORIGINS = [
 #     "https://sub.example.com",
 #     "http://localhost:8080",
 #     "http://127.0.0.1:9000",
-    "http://127.0.0.1:5173", # npm run vite
+    # <<<<<<<<>>>>>>>
+    # npm run vite
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+    # <<<<<<<<>>>>>>>
     "http://127.0.0.1:6564",
     "http://localhost:6564",
 ]

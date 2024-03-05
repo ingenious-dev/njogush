@@ -44,6 +44,10 @@ class ProjectList(generics.ListCreateAPIView):
         if name:
             queryset = queryset.filter(name=name)
 
+        identifier = self.request.query_params.get('identifier')
+        if identifier:
+            queryset = queryset.filter(identifier=identifier)
+
         return queryset
 
     def get_serializer_class(self):
@@ -87,6 +91,13 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
                 )
                 build_serializer = BuildSessionSerializer(build_session)
                 return Response(build_serializer.data)
+            
+            if request.data.get('action') == 'reconfigure':
+                resource.steps.delete()
+                # resource.build_sessions.delete()
+                self.build_session.logs = ''
+                self.build_session.current_step = None
+                self.build_session.save()
             
             if request.data.get('action'):
                 resource.save()
