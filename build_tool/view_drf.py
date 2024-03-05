@@ -96,9 +96,10 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
                 resource.assets.delete()
                 resource.steps.delete()
                 # resource.build_sessions.delete()
-                self.build_session.logs = ''
-                self.build_session.current_step = None
-                self.build_session.save()
+                # TO BE DONE - which build_session again?
+                # self.build_session.logs = ''
+                # self.build_session.current_step = None
+                # self.build_session.save()
             
             if request.data.get('action'):
                 resource.save()
