@@ -37,7 +37,7 @@
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
                 <DialogPanel class="pointer-events-auto w-screen max-w-md">
-                  <form class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+                  <form class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl" @submit.prevent="checkForm()">
                     <div class="h-0 flex-1 overflow-y-auto">
                       <div class="bg-indigo-700 py-6 px-4 sm:px-6">
                         <div class="flex items-center justify-between">
@@ -64,7 +64,7 @@
                                 name="project-name"
                                 id="project-name"
                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                v-model="name" />
+                                v-model="name" required />
                               </div>
                             </div>
                             <div>
@@ -74,21 +74,39 @@
                               </div>
                             </div>
                             <div>
-                              <label for="cover-photo" class="block text-sm font-medium text-gray-700">Cover photo</label>
-                              <div class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-                                <div class="space-y-1 text-center">
-                                  <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                  </svg>
-                                  <div class="flex text-sm text-gray-600">
-                                    <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
-                                      <span>Upload a file</span>
-                                      <input id="file-upload" name="file-upload" type="file" class="sr-only"  @change="uploadFile" ref="file" />
-                                    </label>
-                                    <p class="pl-1">or drag and drop</p>
+                              <label for="cover-photo" class="block text-sm font-medium text-gray-700">Asset file</label>
+                              <div class="flex">
+                                <div class="mt-1 flex justify-center basis-1/2 pr-1" v-if="fileURL">
+                                  <div class="space-y-1 flex flex-col items-center">
+                                    <img :src="fileURL" alt="" class="mx-auto grow w-full object-contain" >
+                                    <!-- <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg> -->
+                                    <!-- <div class="flex text-sm text-gray-600">
+                                      <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
+                                        <span>Upload a file</span>
+                                        <input id="file-upload" name="file-upload" type="file" class="sr-only"  @change="uploadFile" ref="file" required />
+                                      </label>
+                                      <p class="pl-1">or drag and drop</p>
+                                    </div> -->
+                                    <p class="text-xs text-gray-500">PREVIEW</p>
                                   </div>
-                                  <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                 </div>
+                                <label for="file-upload" class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6 basis-1/2 cursor-pointer">
+                                  <div class="space-y-1 text-center">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <div class="flex text-sm text-gray-600 justify-center">
+                                      <div for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
+                                        <span>Upload a file</span>
+                                        <input id="file-upload" name="file-upload" type="file" class="sr-only"  @change="uploadFile" ref="file" />
+                                      </div>
+                                      <!-- <p class="pl-1">or drag and drop</p> -->
+                                    </div>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                  </div>
+                                </label>
                               </div>
                             </div>
                           </div>
@@ -103,9 +121,9 @@
                       <div class="flex flex-shrink-0 justify-end">
                         <button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" @click="open = false">Cancel</button>
                         <button
-                          type="button"
+                          type="submit"
                           class="ml-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          @click="checkForm()">Save</button>
+                          >Save</button>
                       </div>
                     </div>
                   </form>
@@ -315,6 +333,7 @@ export default {
       name: '',
       description: '',
       file: null,
+      fileURL: null,
       openModal: false,
       openModalError: false,
       modalErrorMessage: '',
@@ -338,6 +357,17 @@ export default {
     }
   },
 
+  watch: {
+      // whenever question changes, this function will run
+      currentAsset(newValue, oldValue) {
+        // console.log(newValue)
+
+        if(newValue) {
+          this.fileURL = newValue.file
+        }
+      },
+    },
+
   // Methods are functions that mutate state and trigger updates.
   // They can be bound as event handlers in templates.
   methods: {
@@ -356,6 +386,9 @@ export default {
     setForm(item) {
       this.name = item.name;
       this.description = item.description;
+      // if(!item.file) {
+      //   this.$refs.file.value = null
+      // }
     },
     async save() {
       const data = {
@@ -400,8 +433,18 @@ export default {
       // this.modalErrorMessage = 'Chat socket closed unexpectedly'
     },
     // https://masteringjs.io/tutorials/vue/file-upload
-    uploadFile() {
-      this.file = this.$refs.file.files[0];
+    uploadFile(event) {
+      // this.file = this.$refs.file.files[0];
+
+      if(event.target.files.length > 0){
+        var src = URL.createObjectURL(event.target.files[0]);
+        // var preview = document.getElementById("file-ip-1-preview");
+        // preview.src = src;
+        // preview.style.display = "block";
+        
+        this.file = this.$refs.file.files[0];
+        this.fileURL = src;
+      }
     }
   },
 

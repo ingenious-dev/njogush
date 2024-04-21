@@ -50,6 +50,10 @@
                       {{ item.name }}
                     </a>
                   </RouterLink>
+                  <a href="/user/logout" class="'text-indigo-100 hover:bg-indigo-600 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                    <ArrowLeftIcon class="mr-4 h-6 w-6 flex-shrink-0 text-indigo-300" aria-hidden="true" />
+                    Logout
+                  </a>
                 </nav>
               </div>
             </DialogPanel>
@@ -77,6 +81,10 @@
                 {{ item.name }}
               </a>
             </RouterLink>
+            <a href="/user/logout" class="text-indigo-100 hover:bg-indigo-600 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+              <ArrowLeftIcon class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300" aria-hidden="true" />
+              Logout
+            </a>
           </nav>
         </div>
       </div>
@@ -125,7 +133,8 @@ import {
   BanknotesIcon,
 
   WrenchScrewdriverIcon,
-  InformationCircleIcon
+  InformationCircleIcon,
+  ArrowLeftIcon
 } from '@heroicons/vue/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 

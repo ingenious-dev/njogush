@@ -15,6 +15,7 @@
         <p class="mt-6 max-w-3xl text-xl text-indigo-100">Njogush is a tool that helps developers work smarter. It provides a set of frequently used actions. It simplifies tasks to their basic parts. Complex tasks are designed as collection of simpler ones</p>
       </div>
     </div>
+
     <div class="bg-indigo-200 bg-opacity-25">
       <div class="mx-auto max-w-7xl py-16 px-6 sm:py-24 lg:px-8">
         <div class="lg:grid lg:grid-cols-2 lg:gap-8">
@@ -35,12 +36,44 @@
         </div>
       </div>
     </div>
+
+    <div class="bg-white">
+      <div class="mx-auto max-w-7xl py-12 px-6 lg:py-16 lg:px-8">
+        <p class="text-center text-lg font-semibold text-gray-600">Library & Frameworks used</p>
+        <div class="mt-6 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-8">
+          <div class="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
+            <img class="max-h-12 object-contain" :src="django" alt="Workcation" />
+          </div>
+          <div class="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
+            <img class="max-h-12 object-contain" :src="vuejs" alt="Mirage" />
+          </div>
+          <div class="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
+            <img class="max-h-12 object-contain" :src="tailwind" alt="Tuple" />
+          </div>
+          <!-- <div class="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
+            <img class="max-h-12" src="https://tailwindui.com/img/logos/laravel-logo-gray-400.svg" alt="Laravel" />
+          </div>
+          <div class="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
+            <img class="max-h-12" src="https://tailwindui.com/img/logos/statickit-logo-gray-400.svg" alt="StaticKit" />
+          </div>
+          <div class="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
+            <img class="max-h-12" src="https://tailwindui.com/img/logos/statamic-logo-gray-400.svg" alt="Statamic" />
+          </div> -->
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script setup>
 import image from "../assets/build.png"
 import njogu from "../assets/IMG_0709.jpg"
+
+import django from "../assets/Django_logo.svg.png"
+import vuejs from "../assets/pngegg (1).png"
+import tailwind from "../assets/Tailwind_CSS_logo.svg.png"
+
 </script>
 <style>
 @media (min-width: 1024px) {

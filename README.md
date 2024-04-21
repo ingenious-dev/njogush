@@ -1,6 +1,6 @@
 # njugush
 
-_Powered by_ [![N|Solid](https://ingenious.or.ke/static//img/ingenious%20logo%20-%20cropped.png)](https://ingenious.or.ke/) 
+_Powered by https://ingenious.or.ke_ [![N|Solid](https://ingenious.or.ke/static//img/ingenious%20logo%20-%20cropped.png)](https://ingenious.or.ke/) 
 
 [![Build Status](https://img.shields.io/badge/build-passing-green)](https://github.com/ingenious-dev/njogush)
 
@@ -9,15 +9,21 @@ _Powered by_ [![N|Solid](https://ingenious.or.ke/static//img/ingenious%20logo%20
 INSTALLATION    
 Start the setup on `Output\NjogushSetup.exe`    
 Launch `Njogush DX Build Tool`  
-Open the browser and visit the url [`http:127.0.0.1:6564`](http:127.0.0.1:6564)
+Open the browser and visit the url [`http:127.0.0.1:6564`](http:127.0.0.1:6564/install)
 
 NO INSTALLATION     
 Start the executable on `dist\windows\njogush\njogush.exe`  
-Open the browser and visit the url [`http:127.0.0.1:6564`](http:127.0.0.1:6564)
+Open the browser and visit the url [`http:127.0.0.1:6564`](http:127.0.0.1:6564/install)
 
 ## Linux:  
 Run `./dist/linux/njogush/njogush`  
-Open the browser and visit the url [`http:127.0.0.1:6564`](http:127.0.0.1:6564)
+Open the browser and visit the url [`http:127.0.0.1:6564`](http:127.0.0.1:6564/install)
+
+# Optional Features
+## Forgot Password
+Copy `.env.exammple` and rename it to `.env`.   
+Replace the dummy email settings with working alternative.  
+If the settings provided are correct the forgot password feature should now be working.
 
 
 # Development setup
@@ -68,6 +74,7 @@ Codename:       jammy
 | Poetry | Dependency manager |
 | Django | Web framework |
 | Django Rest Framework | Creating Rest API |
+| Python Decouple | Configure using environment variables |
 | Corsheader | Handle CORS  |
 | PyInstaller | Bundle application  |
 | Batch | Creating compile script for windows  |

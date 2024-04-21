@@ -60,7 +60,7 @@
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
                 <DialogPanel class="pointer-events-auto w-screen max-w-md">
-                  <form class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+                  <form class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl" @submit.prevent="checkForm()">
                     <div class="h-0 flex-1 overflow-y-auto">
                       <div class="bg-indigo-700 py-6 px-4 sm:px-6">
                         <div class="flex items-center justify-between">
@@ -87,7 +87,7 @@
                                 name="project-name"
                                 id="project-name"
                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                v-model="name" />
+                                v-model="name" required />
                               </div>
                             </div>
                             <div>
@@ -104,14 +104,14 @@
                                 name="project-rank"
                                 id="project-rank"
                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                v-model="rank" />
+                                v-model="rank" required />
                               </div>
                             </div>
 
                             <div>
                               <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
                               <div class="mt-1">
-                                <select id="category" name="category" autocomplete="category-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="category">
+                                <select id="category" name="category" autocomplete="category-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="category" required>
                                   <option value="folder">Folder</option>
                                   <option value="file">File</option>
                                   <option value="excerpt">Excerpt</option>
@@ -128,7 +128,7 @@
                                   name="project-folder"
                                   id="project-folder"
                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  v-model="folder" />
+                                  v-model="folder" required />
                                 </div>
                               </div>
                             </div>
@@ -141,13 +141,13 @@
                                   name="project-file_path"
                                   id="project-file_path"
                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  v-model="file_path" />
+                                  v-model="file_path" required />
                                 </div>
                               </div>
                               <div>
                                   <label for="asset" class="block text-sm font-medium text-gray-700">Asset</label>
                                   <div class="mt-1">
-                                    <select id="asset" name="asset" autocomplete="asset-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="asset">
+                                    <select id="asset" name="asset" autocomplete="asset-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="asset" required>
                                       <option v-for="item in assets" :key="item.id" :value="item.id">{{ item.name }}</option>
                                     </select>
                                   </div>
@@ -162,13 +162,13 @@
                                   name="project-file_path"
                                   id="project-file_path"
                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  v-model="file_path" />
+                                  v-model="file_path" required />
                                 </div>
                               </div>
                               <div>
                                 <label for="excerpt" class="block text-sm font-medium text-gray-900">Excerpt</label>
                                 <div class="mt-1">
-                                  <textarea id="excerpt" name="excerpt" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="excerpt" />
+                                  <textarea id="excerpt" name="excerpt" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="excerpt" required />
                                 </div>
                               </div>
                               <div>
@@ -179,7 +179,7 @@
                                   name="project-excerpt_start"
                                   id="project-excerpt_start"
                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  v-model="excerpt_start" />
+                                  v-model="excerpt_start" required />
                                 </div>
                               </div>
                               <div>
@@ -190,7 +190,7 @@
                                   name="project-excerpt_end"
                                   id="project-excerpt_end"
                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  v-model="excerpt_end" />
+                                  v-model="excerpt_end" required />
                                 </div>
                               </div>
                             </div>
@@ -198,7 +198,7 @@
                               <div>
                                 <label for="command" class="block text-sm font-medium text-gray-900">command</label>
                                 <div class="mt-1">
-                                  <textarea id="command" name="command" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="command" />
+                                  <textarea id="command" name="command" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="command" required />
                                 </div>
                               </div>
                             </div>
@@ -214,9 +214,9 @@
                       <div class="flex flex-shrink-0 justify-end">
                         <button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" @click="open = false">Cancel</button>
                         <button
-                          type="button"
+                          type="submit"
                           class="ml-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          @click="checkForm()">Save</button>
+                          >Save</button>
                       </div>
                     </div>
                   </form>

@@ -90,7 +90,7 @@
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
                 <DialogPanel class="pointer-events-auto w-screen max-w-md">
-                  <form class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+                  <form class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl" @submit.prevent="save()">
                     <div class="h-0 flex-1 overflow-y-auto">
                       <div class="bg-indigo-700 py-6 px-4 sm:px-6">
                         <div class="flex items-center justify-between">
@@ -160,9 +160,9 @@
                       <div class="flex flex-shrink-0 justify-end">
                         <button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" @click="open = false">Cancel</button>
                         <button
-                          type="button"
+                          type="submit"
                           class="ml-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          @click="save()">Save</button>
+                          >Save</button>
                       </div>
                     </div>
                   </form>
