@@ -7,10 +7,16 @@
           <div v-if="showAlert" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div class="p-4">
               <div class="flex items-start">
-                <div class="flex-shrink-0">
+                <div class="flex-shrink-0" v-if="status == 'success'">
                   <CheckCircleIcon class="h-6 w-6 text-green-400" aria-hidden="true" />
                 </div>
-                <div class="ml-3 w-0 flex-1 pt-0.5">
+                <div class="flex-shrink-0" v-else-if="status == 'error'">
+                  <ExclamationTriangleIcon class="h-6 w-6 text-red-400" aria-hidden="true" />
+                </div>
+                <div class="flex-shrink-0" v-else>
+                  <ExclamationCircleIcon class="h-6 w-6 text-gray-400" aria-hidden="true" />
+                </div>
+                  <div class="ml-3 w-0 flex-1 pt-0.5">
                   <p class="text-sm font-medium text-gray-900">{{ title }}</p>
                   <p class="mt-1 text-sm text-gray-500">{{ message }}</p>
                 </div>
@@ -30,30 +36,35 @@
   
   <script>
   // import { ref } from 'vue'
-  import { CheckCircleIcon } from '@heroicons/vue/24/outline'
+  import { CheckCircleIcon, ExclamationTriangleIcon, ExclamationCircleIcon } from '@heroicons/vue/24/outline'
   import { XMarkIcon } from '@heroicons/vue/20/solid'
   
   // const show = ref(true)
   export default {
     components: {
-      CheckCircleIcon,
+      CheckCircleIcon, ExclamationTriangleIcon, ExclamationCircleIcon,
       XMarkIcon,
     },
     computed: {
       showAlert() {
         // `this` points to the component instance
-        // return this.$store.state.institutions;
+        // return this.$store.state.showAlert;
         return this.$store.getters.showAlert;
       },
       title() {
         // `this` points to the component instance
-        // return this.$store.state.institutions;
+        // return this.$store.state.title;
         return this.$store.getters.title;
       },
       message() {
         // `this` points to the component instance
-        // return this.$store.state.institutions;
+        // return this.$store.state.message;
         return this.$store.getters.message;
+      },
+      status() {
+        // `this` points to the component instance
+        // return this.$store.state.status;
+        return this.$store.getters.status;
       },
     },
 

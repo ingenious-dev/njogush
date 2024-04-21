@@ -91,9 +91,10 @@
 
       <RouterView />
     </div>
+
+    <Alert />
   </div>
 
-  <Alert />
 </template>
 
 <script setup>

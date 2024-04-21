@@ -69,8 +69,7 @@ const projects = {
                     console.log(data);
 
                     commit('addProjects', {
-                        // projects: data.results
-                        projects: data
+                        projects: data.results
                     })
                 })
                 .catch(function (error) {
@@ -107,12 +106,12 @@ const projects = {
                     // handle success
                     console.log(data);
                     commit('prependProject', data)
-                    store.dispatch('showAlert', {title: 'Successfully created!', message: 'project'})
+                    store.dispatch('showAlert', {title: 'Successfully created!', message: 'project', status: 'success'})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'project'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'success', status: 'error'})
                     throw error;
                 })
                 .finally(function () {
@@ -127,7 +126,7 @@ const projects = {
                     console.log(data);
                     // commit('updateProject', data)
                     store.dispatch('getProject', {id: payload.id})
-                    store.dispatch('showAlert', {title: 'Successfully updated!', message: 'project'})
+                    store.dispatch('showAlert', {title: 'Successfully updated!', message: 'project', status: 'success'})
 
                     // 
                     if (payload.data.action) {
@@ -138,7 +137,7 @@ const projects = {
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'project'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {
@@ -152,12 +151,12 @@ const projects = {
                     // handle success
                     console.log(data);
                     commit('removeProject', {id: payload.id})
-                    store.dispatch('showAlert', {title: 'Successfully deleted!', message: 'project'})
+                    store.dispatch('showAlert', {title: 'Successfully deleted!', message: 'project', status: 'success'})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'project'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {

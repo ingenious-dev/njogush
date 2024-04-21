@@ -63,8 +63,7 @@ const steps = {
                     console.log(data);
 
                     commit('addSteps', {
-                        // steps: data.results
-                        steps: data
+                        steps: data.results
                     })
                 })
                 .catch(function (error) {
@@ -93,13 +92,13 @@ const steps = {
                     // handle success
                     console.log(data);
                     // commit('prependStep', data)
-                    store.dispatch('showAlert', {title: 'Successfully created!', message: 'step'})
-                    store.dispatch('fetchSteps', {})
+                    store.dispatch('showAlert', {title: 'Successfully created!', message: 'step', status: 'success'})
+                    store.dispatch('fetchSteps', {project: payload.project})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {
@@ -123,12 +122,12 @@ const steps = {
                     // handle success
                     console.log(data);
                     commit('updateStep', data)
-                    store.dispatch('showAlert', {title: 'Successfully updated!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Successfully updated!', message: 'step', status: 'success'})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {
@@ -142,12 +141,12 @@ const steps = {
                     // handle success
                     console.log(data);
                     commit('removeStep', {id: payload.id})
-                    store.dispatch('showAlert', {title: 'Successfully deleted!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Successfully deleted!', message: 'step', status: 'success'})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {

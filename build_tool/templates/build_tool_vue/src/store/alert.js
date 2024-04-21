@@ -3,12 +3,14 @@ const institutions = {
         showAlert: false,
         title: '',
         message: '',
+        status: '',
     }),
     mutations: {
         showAlert (state, payload) {
             state.showAlert = true;
             state.title = payload.title;
             state.message = payload.message;
+            state.status = payload.status;
         },
         closeAlert (state, payload) {
             state.showAlert = false;
@@ -23,6 +25,9 @@ const institutions = {
         },
         message (state) {
             return state.message
+        },
+        status (state) {
+            return state.status
         },
     },
     actions: {

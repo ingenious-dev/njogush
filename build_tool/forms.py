@@ -3,7 +3,19 @@ from django.utils.translation import gettext_lazy as _
 from django.forms import Textarea , DateTimeField 
 
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
 from .models import (Project, Asset, Step)
+
+class UserRegisterForm(UserCreationForm):
+
+    # email = forms.EmailField()
+    email = forms.EmailField(required=False)
+
+    class Meta:
+        model = User
+        fields = ['first_name','last_name', 'username', 'email', 'password1', 'password2']
+
 
 class Project_Form(forms.ModelForm):
     class Meta:

@@ -6,6 +6,8 @@ from . import views
 
 app_name = 'build_tool'
 urlpatterns = [
+    path('install', views.install, name='install'),
+
     path('', views.index, name='index'),
 
     # TODO https://stackoverflow.com/a/6259570/10401826

@@ -63,8 +63,7 @@ const buildSessions = {
                     console.log(data);
 
                     commit('addBuildSessions', {
-                        // buildSessions: data.results
-                        buildSessions: data
+                        buildSessions: data.results
                     })
                 })
                 .catch(function (error) {
@@ -110,13 +109,13 @@ const buildSessions = {
                     // handle success
                     console.log(data);
                     // commit('prependBuildSession', data)
-                    store.dispatch('showAlert', {title: 'Successfully created!', message: 'step'})
-                    store.dispatch('fetchBuildSessions', {})
+                    store.dispatch('showAlert', {title: 'Successfully created!', message: 'step', status: 'success'})
+                    store.dispatch('fetchBuildSessions', {project: payload.project})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {
@@ -140,12 +139,12 @@ const buildSessions = {
                     // handle success
                     console.log(data);
                     commit('updateBuildSession', data)
-                    store.dispatch('showAlert', {title: 'Successfully updated!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Successfully updated!', message: 'step', status: 'success'})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'success', status: 'error'})
                     throw error;
                 })
                 .finally(function () {
@@ -159,12 +158,12 @@ const buildSessions = {
                     // handle success
                     console.log(data);
                     commit('removeBuildSession', {id: payload.id})
-                    store.dispatch('showAlert', {title: 'Successfully deleted!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Successfully deleted!', message: 'step', status: 'success'})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'step'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {

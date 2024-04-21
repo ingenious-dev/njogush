@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     ## Added Apps 
     'daphne',
     'rest_framework',
+    'rest_framework.authtoken', # TODO https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication,
     'corsheaders', # TODO https://pypi.org/project/django-cors-headers/
 
+    'user',
     'chat',
     'build_tool',
 
@@ -76,6 +78,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'njogush.context_processor.add_settings',
             ],
         },
     },
@@ -137,6 +141,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🏁 START OF NON-BOILERPLATE SETTINGS 🏁
+TIME_ZONE = 'Africa/Nairobi' # UTC
+
+# TODO https://docs.djangoproject.com/en/4.0/topics/auth/default/#the-login-required-decorator
+LOGIN_URL = "user:login"
+
+LOGIN_REDIRECT_URL = "build_tool:index"
+
 import glob
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -169,4 +180,43 @@ STATICFILES_DIRS = static_path
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+from decouple import config
+from decouple import Csv
+
+# + https://docs.djangoproject.com/en/4.0/topics/email/#module-django.core.mail
+EMAIL_HOST = config('EMAIL_HOST', default='')
+EMAIL_PORT = config('EMAIL_PORT', default=465, cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=True, cast=bool)
+
+DEFAULT_FROM_EMAIL=EMAIL_HOST_USER # + https://docs.djangoproject.com/en/4.0/topics/auth/default/#django.contrib.auth.views.PasswordResetView.from_email
+
+ADMINS = [
+    # ('John', 'john@example.com'),
+    # ('Mary', 'mary@example.com')
+]
+ADMINS.append(config('ADMINS', default='', cast=Csv(post_process=tuple)))
+
+EMAIL_SUBJECT_PREFIX = config('EMAIL_SUBJECT_PREFIX', default='[Ohala] ')
+
+# TODO DJANGO REST FRAMEWORK
+# + https://www.django-rest-framework.org/tutorial/5-relationships-and-hyperlinked-apis/#adding-pagination
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    # + https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # + https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
+        'rest_framework.authentication.TokenAuthentication', # ! IMPORTANT => https://www.django-rest-framework.org/api-guide/authentication/#apache-mod_wsgi-specific-configuration
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+CUSTOM_SYSTEM_NAME = 'Njogush'
 REMOTE_MODE = False # ! IMPORTANT

@@ -160,6 +160,11 @@ class AssetDetail(generics.RetrieveUpdateDestroyAPIView):
         return queryset
 
     def perform_update(self, serializer):
+        file = serializer.validated_data.get("file")
+        if file:
+            resource = self.get_object()
+            resource.file.delete()
+            
         instance = serializer.save()
 
 # ! STEP

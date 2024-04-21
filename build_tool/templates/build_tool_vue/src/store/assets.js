@@ -63,8 +63,7 @@ const assets = {
                     console.log(data);
 
                     commit('addAssets', {
-                        // assets: data.results
-                        assets: data
+                        assets: data.results
                     })
                 })
                 .catch(function (error) {
@@ -93,20 +92,20 @@ const assets = {
                     // handle success
                     console.log(data);
                     // commit('prependAsset', data)
-                    store.dispatch('showAlert', {title: 'Successfully created!', message: 'asset'})
-                    store.dispatch('fetchAssets', {})
+                    store.dispatch('showAlert', {title: 'Successfully created!', message: 'asset', status: 'success'})
+                    store.dispatch('fetchAssets', {project: payload.project})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'asset'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {
                     // always executed
                 });
         },
-        updateAsset ({ commit, state }, payload) {            
+        updateAsset ({ commit, state }, payload) {      
             // https://masteringjs.io/tutorials/vue/file-upload
             const formData = new FormData();
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
@@ -123,12 +122,12 @@ const assets = {
                     // handle success
                     console.log(data);
                     commit('updateAsset', data)
-                    store.dispatch('showAlert', {title: 'Successfully updated!', message: 'asset'})
+                    store.dispatch('showAlert', {title: 'Successfully updated!', message: 'asset', status: 'success'})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'asset'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {
@@ -142,12 +141,12 @@ const assets = {
                     // handle success
                     console.log(data);
                     commit('removeAsset', {id: payload.id})
-                    store.dispatch('showAlert', {title: 'Successfully deleted!', message: 'asset'})
+                    store.dispatch('showAlert', {title: 'Successfully deleted!', message: 'asset', status: 'success'})
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    store.dispatch('showAlert', {title: 'Error!', message: 'asset'})
+                    store.dispatch('showAlert', {title: 'Error!', message: error.message, status: 'error'})
                     throw error;
                 })
                 .finally(function () {

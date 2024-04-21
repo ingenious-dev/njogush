@@ -1,4 +1,4 @@
-import { axios_error_message } from './axios_helper';
+import { axios_error_message } from '../network/axios_helper';
 import http_client from '../network/http_client';
 import { NJOGUSH_BASE_URL } from '../network/network_info';
 
