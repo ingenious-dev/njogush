@@ -81,8 +81,10 @@ def install(request):
         # hence doesn't prepopulate the UI form incase of validation error 
         # form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            # username = form.cleaned_data.get('username')
+            user = form.save()
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
 
             if os.path.exists("INSTALL_NJOGUSH"):
                 os.remove("INSTALL_NJOGUSH")
