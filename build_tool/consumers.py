@@ -248,13 +248,14 @@ class BuildConsumer(WebsocketConsumer):
         stderr = ''
         self.socket_send(step, stdout, stderr, 'loading')
 
-        args = shlex.split(step.command)
+        # args = shlex.split(step.command)
         # with subprocess.Popen(args, stdout=subprocess.PIPE, shell=True) as proc:
             # log.write(proc.stdout.read())
         """
         ... Additionally, stderr can be STDOUT, which indicates that the stderr data from the applications should be captured into the same file handle as for stdout.
         """
-        self.command_process[f"{step.id}"] = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        # self.command_process[f"{step.id}"] = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) # does not well for multiline commands
+        self.command_process[f"{step.id}"] = subprocess.Popen(step.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         # <<<<<<<<<<>>>>>>>
         # OPTION 1 - not working
         # + https://docs.python.org/3/library/subprocess.html#subprocess.Popen.stderr
