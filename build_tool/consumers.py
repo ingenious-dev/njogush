@@ -272,7 +272,7 @@ class BuildConsumer(WebsocketConsumer):
         
         stdout += self.thread_outputs['stdout']
         stderr += self.thread_outputs['stderr']
-        self.socket_send(step, stdout, stderr)
+        self.socket_send(step, stdout, stderr, 'success')
             
     def socket_send(self, step, stdout, stderr, default_status=None):
         report_data = {
