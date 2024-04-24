@@ -426,7 +426,7 @@ export default {
   // This function will be called when the component is mounted.
   mounted() {
     // console.log(`The initial count is ${this.count}.`)
-    this.$store.dispatch('fetchProjects', {});
+    this.$store.dispatch('fetchProjects', {limit: 1000});
   }
 }
 </script>

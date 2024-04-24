@@ -9,6 +9,7 @@ from rest_framework.exceptions import PermissionDenied, ParseError, ValidationEr
 
 from .models import (Project, Asset, Step, BuildSession)
 from .serializers import (ProjectSerializer, AssetSerializer, StepSerializer, BuildSessionSerializer)
+from .pagination import VariableResultsSetPagination
 
 @api_view(['GET'])
 def dashboard(request):
@@ -30,6 +31,8 @@ class ProjectList(generics.ListCreateAPIView):
     """
     List all Project or create a new Project.
     """
+
+    pagination_class = VariableResultsSetPagination
 
     def get_queryset(self):
         """
@@ -118,6 +121,8 @@ class AssetList(generics.ListCreateAPIView):
     List all Asset or create a new Asset.
     """
 
+    pagination_class = VariableResultsSetPagination
+
     def get_queryset(self):
         """
         Optionally restricts the returned purchases to a given user,
@@ -173,6 +178,8 @@ class StepList(generics.ListCreateAPIView):
     List all Step or create a new Step.
     """
 
+    pagination_class = VariableResultsSetPagination
+
     def get_queryset(self):
         """
         Optionally restricts the returned purchases to a given user,
@@ -222,6 +229,8 @@ class BuildSessionList(generics.ListCreateAPIView):
     """
     List all BuildSession or create a new BuildSession.
     """
+
+    pagination_class = VariableResultsSetPagination
 
     def get_queryset(self):
         """
