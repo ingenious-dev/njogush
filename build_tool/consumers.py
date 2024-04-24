@@ -255,8 +255,19 @@ class BuildConsumer(WebsocketConsumer):
         ... Additionally, stderr can be STDOUT, which indicates that the stderr data from the applications should be captured into the same file handle as for stdout.
         """
         self.command_process[f"{step.id}"] = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        self.thread_outputs['stdout'] = self.command_process[f"{step.id}"].stdout.read().decode()
-        self.thread_outputs['stderr'] = self.command_process[f"{step.id}"].stderr.read().decode()
+        # <<<<<<<<<<>>>>>>>
+        # OPTION 1 - not working
+        # + https://docs.python.org/3/library/subprocess.html#subprocess.Popen.stderr
+        """Warning Use communicate() rather than .stdin.write, .stdout.read or .stderr.read to avoid deadlocks due to any of the other OS pipe buffers filling up and blocking the child process."""
+        # self.thread_outputs['stdout'] = self.command_process[f"{step.id}"].stdout.read().decode()
+        # self.thread_outputs['stderr'] = self.command_process[f"{step.id}"].stderr.read().decode()
+        # <<<<<<<<<<>>>>>>>
+        # <<<<<<<<<<>>>>>>>
+        # OPTION 2
+        outs, errs = self.command_process[f"{step.id}"].communicate()
+        self.thread_outputs['stdout'] = outs.decode()
+        self.thread_outputs['stderr'] = errs.decode()
+        # <<<<<<<<<<>>>>>>>
         
         stdout += self.thread_outputs['stdout']
         stderr += self.thread_outputs['stderr']

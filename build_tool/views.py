@@ -31,7 +31,6 @@ def preserve_append_slash(function):
             match = resolve(add_leading_slash)
             # Print the URL pattern that matches the URL
             # print(match.url_name)
-            print(match.view_name)
             if 'build_tool' in match.view_name: # build_tool:build_tool_index
                 raise Resolver404()
             
