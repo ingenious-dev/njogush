@@ -35,7 +35,7 @@
                       <p class="text-sm text-gray-600 line-clamp-2">{{ item.preview }}</p>
                     </div> -->
                     <div class="mt-1 flex justify-end">
-                      <a href="#" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50" @click="openSideBar(item.id)">Edit</a>
+                      <a href="#" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50" @click.prevent="openSideBar(item.id)">Edit</a>
                     </div>
                   </li>
                 </ul>

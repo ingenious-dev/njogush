@@ -16,7 +16,7 @@
           <div class="px-4 py-6 sm:px-6">
             <ul role="list" class="space-y-8">
               <li v-for="item in steps" :key="item.id">
-                <a href="#" class="block hover:bg-gray-50" @click="openSideBar(item.id)">
+                <a href="#" class="block hover:bg-gray-50" @click.prevent="openSideBar(item.id)">
                   <div class="px-4 py-4 sm:px-6">
                     <div class="flex items-center justify-between">
                       <p class="truncate text-sm font-medium text-indigo-600">{{ item.name }}</p>

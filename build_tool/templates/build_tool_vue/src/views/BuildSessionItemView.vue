@@ -106,9 +106,9 @@
         <div class="space-y-6 lg:col-span-2 lg:col-start-1">
 
           <div>
-            <label for="chat-log" class="block text-sm font-medium text-gray-700">Previous Logs ({{ $moment(currentBuildSession?.date_modified).format('MMMM D, YYYY, h:mm:ss a') }})</label>
+            <label for="previous-chat-log" class="block text-sm font-medium text-gray-700">Previous Logs ({{ $moment(currentBuildSession?.date_modified).format('MMMM D, YYYY, h:mm:ss a') }})</label>
             <div class="mt-1">
-              <textarea id="chat-log" name="chat-log" rows="20" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="" ref="chat_log" disabled :value="currentBuildSession?.logs" />
+              <textarea id="previous-chat-log" name="previous-chat-log" rows="20" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="" disabled :value="currentBuildSession?.logs" />
             </div>
           </div>
 
