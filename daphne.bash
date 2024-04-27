@@ -20,11 +20,15 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 ar=($(find $SCRIPT_DIR -executable -type f -name daphne))
-$ar -p 6564 njogush.asgi:application
+$ar -b 0.0.0.0 -p 6564 njogush.asgi:application
 # + https://stackoverflow.com/questions/59895/how-do-i-get-the-directory-where-a-bash-script-is-located-from-within-the-script
 # + https://www.baeldung.com/linux/get-absolute-path#using-the-find-command
 # + https://unix.stackexchange.com/questions/479349/find-files-in-specific-directories/735707#735707
 # + https://superuser.com/questions/38981/how-can-i-find-only-the-executable-files-under-a-certain-directory-in-linux
+
 # + https://stackoverflow.com/questions/2087001/how-can-i-process-the-results-of-find-in-a-bash-script/5285406#5285406
 # + https://stackoverflow.com/questions/6594085/remove-first-character-of-a-string-in-bash/46699430#46699430
+# + https://www.linode.com/docs/guides/start-service-at-boot/
+# + https://unix.stackexchange.com/questions/422213/how-to-see-the-latest-x-lines-from-systemctl-service-log
+# + https://superuser.com/questions/1602999/ubuntu-systemctl-service-fails-with-main-process-exited-code-exited-status-1
 # <<<<<<<>>>>>>
