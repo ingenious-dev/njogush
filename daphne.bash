@@ -19,8 +19,10 @@
 # OPTION 2
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
-ar=($(find $SCRIPT_DIR -executable -type f -name daphne))
-$ar -b 0.0.0.0 -p 6564 njogush.asgi:application
+# ar=($(find $SCRIPT_DIR -executable -type f -name daphne))
+# $ar -b 0.0.0.0 -p 6564 njogush.asgi:application
+ar=($(find $SCRIPT_DIR/venv -name python))
+$ar manage.py runserver 0.0.0.0:6564
 # + https://stackoverflow.com/questions/59895/how-do-i-get-the-directory-where-a-bash-script-is-located-from-within-the-script
 # + https://www.baeldung.com/linux/get-absolute-path#using-the-find-command
 # + https://unix.stackexchange.com/questions/479349/find-files-in-specific-directories/735707#735707
