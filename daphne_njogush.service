@@ -1,0 +1,13 @@
+[Unit]
+Description=Daphne-Njogush Service
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=dev
+ExecStart=/bin/bash /home/dev/njogush/daphne.bash
+
+[Install]
+WantedBy=multi-user.target
