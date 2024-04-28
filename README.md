@@ -113,6 +113,12 @@ The above known issue has only been observed when njogush is run as a service at
 Here is a link that might help with installing a default upto date version of nodejs:
 https://joshtronic.com/2023/04/23/how-to-install-nodejs-20-on-ubuntu-2004-lts/
 
+## fvm
+```sh
+fvm: command not found
+```
+The solution is to Call fvm from absolute path for example, `/home/linuxbrew/.linuxbrew/bin/fvm flutter build apk`
+
 # Considerations & Recommendation
 Using django-eventstream
 Providing a export/import functionality & format e.g JSON
@@ -122,3 +128,4 @@ https://www.flaticon.com/free-icon/build_8297314
 
 # References
 Node Version Manager - https://github.com/nvm-sh/nvm
+Simple Flutter Version Management -  https://fvm.app/
