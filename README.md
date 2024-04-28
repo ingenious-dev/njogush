@@ -25,6 +25,16 @@ Copy `.env.exammple` and rename it to `.env`.
 Replace the dummy email settings with working alternative.  
 If the settings provided are correct the forgot password feature should now be working.
 
+## Systemd service
+You can run njogush as a service and enable it to start at reboot. Here is how to do it with `systemd`
+
+```sh
+cp daphne_njogush.service /etc/systemd/system
+sudo systemctl start daphne_njogush.service
+sudo systemctl enable daphne_njogush.service
+```
+
+
 
 # Development setup
 To setup a dev environment for coding, clone the repository and then run `make dev-setup` to setup a virtual environment with the needed dependencies.
@@ -86,8 +96,29 @@ The setting `REMOTE_MODE = False` prevents the build tool from running projects 
 
 This build tool can run arbitrary commands. While this allows the developer greater control which is limited by other build tools, it is the responsibilty of the developer to ascertain the safety of the executed commands.
 
+# Known Issues
+## `cd` command
+`cd` command will not change the working directory when run directly. To overcome this, create a bash script and place the command with `cd` inside the script then run it.
+
+## nvm limitations
+when running njogush as a systemd service the following nodejs/npm related error has been noticed   
+`nvm command not found`, `npx command not found`, `nvm is not a direcory`   
+These errors are typically experienced when nodejs has been installed through nvm.
+
+The solution is to install a default/system nodejs version using the system package mananger (apt). Njogush will then use this default nodejs version to run your command.
+
+To run your command using nvm versions of nodejs run njogush from a terminal.
+The above known issue has only been observed when njogush is run as a service at reboot.
+
+Here is a link that might help with installing a default upto date version of nodejs:
+https://joshtronic.com/2023/04/23/how-to-install-nodejs-20-on-ubuntu-2004-lts/
+
 # Considerations & Recommendation
 Using django-eventstream
+Providing a export/import functionality & format e.g JSON
 
 # Credits
 https://www.flaticon.com/free-icon/build_8297314
+
+# References
+Node Version Manager - https://github.com/nvm-sh/nvm
