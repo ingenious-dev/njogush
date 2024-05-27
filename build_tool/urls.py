@@ -31,6 +31,8 @@ urlpatterns += [
 
     path('api/build-sessions/', views.BuildSessionList.as_view(), name='build-session-list'),
     path('api/build-sessions/<int:pk>/', views.BuildSessionDetail.as_view(), name='build-session-detail'),
+
+    path('api/github_callback/<int:pk>/', views.github_callback, name='github-callback'),
     
 ]
 

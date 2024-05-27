@@ -10,6 +10,7 @@ from rest_framework.exceptions import PermissionDenied, ParseError, ValidationEr
 from .models import (Project, Asset, Step, BuildSession)
 from .serializers import (ProjectSerializer, AssetSerializer, StepSerializer, BuildSessionSerializer)
 from .pagination import VariableResultsSetPagination
+from .build_scripts import run_project_build
 
 @api_view(['GET'])
 def dashboard(request):
@@ -95,6 +96,16 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
                 build_serializer = BuildSessionSerializer(build_session)
                 return Response(build_serializer.data)
             
+            if request.data.get('action') == 'build':
+
+                project_id = resource.id
+                build_data = {
+                    'project_id': project_id,
+                    "token": request.user.auth_token.key,
+                }
+                
+                run_project_build(build_data)
+ 
             if request.data.get('action') == 'reconfigure':
                 Asset.objects.filter(project=resource).delete()
                 Step.objects.filter(project=resource).delete()
@@ -268,7 +279,7 @@ class BuildSessionDetail(generics.RetrieveUpdateDestroyAPIView):
         """
         queryset = BuildSession.objects.all()
         return queryset
-
+    
     def perform_update(self, serializer):
         instance = serializer.save()
 
@@ -276,6 +287,24 @@ class BuildSessionDetail(generics.RetrieveUpdateDestroyAPIView):
 # from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def github_callback(request, pk):
+    if request.method == 'POST':
+        print(request.data)
+
+        project_id = pk
+        build_data = {
+            'project_id': project_id,
+            "token": "",
+        }
+        
+        run_project_build(build_data)
+        
+        return Response(request.data, status=status.HTTP_201_CREATED)
+        # return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def api_root(request, format=None):

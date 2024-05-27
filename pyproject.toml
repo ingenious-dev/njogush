@@ -15,6 +15,8 @@ channels = {extras = ["daphne"], version = "^4.0.0"}
 pyinstaller = "5.4.1"
 art = "^6.1"
 python-decouple = "^3.8"
+requests = "^2.32.2"
+websockets = "^12.0"
 
 [build-system]
 requires = ["poetry-core"]
