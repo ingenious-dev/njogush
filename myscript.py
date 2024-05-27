@@ -37,6 +37,9 @@ tprint("njogush") # print ASCII text (default font)
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'njogush.settings')
 
+    sys.argv = ['myscript.py', 'collectstatic', '--noinput']
+    execute_from_command_line(sys.argv) 
+
     sys.argv = ['myscript.py', 'migrate']
     execute_from_command_line(sys.argv)   
 
