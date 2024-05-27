@@ -27,8 +27,8 @@ def run_project_build(build_data):
     # NJOGUSH_SOCKET_URL = settings.NJOGUSH_SOCKET_URL_CUSTOM_DOMAIN
     # NJOGUSH_TOKEN = settings.NJOGUSH_TOKEN_CUSTOM_DOMAIN
 
-    NJOGUSH_BASE_URL = "http://127.0.0.0.1:6564"
-    NJOGUSH_SOCKET_URL = "ws://127.0.0.0.1:6564"
+    NJOGUSH_BASE_URL = "http://127.0.0.1:6564"
+    NJOGUSH_SOCKET_URL = "ws://127.0.0.1:6564"
     NJOGUSH_TOKEN = build_data["token"]
 
     project_id = build_data["project_id"]
