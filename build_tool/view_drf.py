@@ -291,14 +291,14 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def github_callback(request, pk):
+def github_callback(request, pk, token):
     if request.method == 'POST':
         print(request.data)
 
         project_id = pk
         build_data = {
             'project_id': project_id,
-            "token": "",
+            "token": token,
         }
         
         run_project_build(build_data)
