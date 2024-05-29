@@ -360,7 +360,7 @@ import { Switch, SwitchDescription, SwitchGroup, SwitchLabel } from '@headlessui
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 import AssetsView from './AssetsView.vue'
 import StepsView from './StepsView.vue'
-import { getBaseUrl } from '../network/network_info'
+import { NJOGUSH_WEBSOCKET_URL, getBaseUrl } from '../network/network_info'
 
 export default {
   components: {
@@ -520,9 +520,17 @@ export default {
       // );
 
       // OPTION 2
+      // this.chatSocket = new WebSocket(
+      //     'ws://'
+      //     + getBaseUrl()
+      //     + '/ws/build/'
+      //     + roomName
+      //     + '/'
+      // );
+
+      // OPTION 3 - infer protocol
       this.chatSocket = new WebSocket(
-          'ws://'
-          + getBaseUrl()
+          NJOGUSH_WEBSOCKET_URL
           + '/ws/build/'
           + roomName
           + '/'
