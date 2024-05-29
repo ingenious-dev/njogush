@@ -180,6 +180,10 @@ STATICFILES_DIRS = static_path
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+CSRF_TRUSTED_ORIGINS = [
+    # 'https://example.com',
+]
+
 from decouple import config
 from decouple import Csv
 
@@ -219,4 +223,4 @@ REST_FRAMEWORK = {
 }
 
 CUSTOM_SYSTEM_NAME = 'Njogush'
-REMOTE_MODE = False # ! IMPORTANT
+REMOTE_MODE = config('REMOTE_MODE', default=False, cast=bool) # ! IMPORTANT
