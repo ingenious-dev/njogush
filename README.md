@@ -64,6 +64,7 @@ OS Version:                10.0.22000 N/A Build 22000
 OS Build Type:             Multiprocessor Free
 ```
 
+
 ## Linux
 ```sh
 $ bash compile.sh
@@ -76,6 +77,22 @@ Distributor ID: Ubuntu
 Description:    Ubuntu 22.04.2 LTS
 Release:        22.04
 Codename:       jammy
+```
+
+# Running njogush as a service
+## Windows (from the python code)
+See `windows/README.md` for known issues with this method.
+
+```sh
+sc.exe create njogush start=auto binPath="[PATH_TO_NJOGUSH_CODE]\daphne.bat"
+```
+For more on `sc.exe` see `https://learn.microsoft.com/en-US/windows-server/administration/windows-commands/sc-create`
+
+## Linux (from the python code)
+```sh
+cp daphne_njogush.service /etc/systemd/system/
+systemctl enable daphne_njogush.service
+systemctl restart daphne_njogush.service
 ```
 
 # Technologies
@@ -127,5 +144,5 @@ Providing a export/import functionality & format e.g JSON
 https://www.flaticon.com/free-icon/build_8297314
 
 # References
-Node Version Manager - https://github.com/nvm-sh/nvm
-Simple Flutter Version Management -  https://fvm.app/
+Node Version Manager - https://github.com/nvm-sh/nvm    
+Simple Flutter Version Management -  https://fvm.app/   

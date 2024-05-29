@@ -3,24 +3,6 @@ import asyncio
 import os
 
 import requests
-from websockets.sync.client import connect
-
-# <<<<<<<>>>>>>>
-# TODO https://docs.djangoproject.com/en/5.0/topics/settings/#calling-django-setup-is-required-for-standalone-django-usage
-import django
-from django.conf import settings
-# from myapp import myapp_defaults
-
-# settings.configure(default_settings=myapp_defaults, DEBUG=True)
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ohala.settings')
-try:
-    """django.setup() may only be called once."""
-    django.setup()
-except:
-    pass
-# <<<<<<<>>>>>>>
-
-# Now this script or any imported module can use any part of Django it needs.
 
 def run_project_build(build_data):
     # NJOGUSH_BASE_URL = settings.NJOGUSH_BASE_URL_CUSTOM_DOMAIN
