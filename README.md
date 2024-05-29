@@ -34,8 +34,6 @@ sudo systemctl start daphne_njogush.service
 sudo systemctl enable daphne_njogush.service
 ```
 
-
-
 # Development setup
 To setup a dev environment for coding, clone the repository and then run `make dev-setup` to setup a virtual environment with the needed dependencies.
 
@@ -83,10 +81,21 @@ Codename:       jammy
 ## Windows (from the python code)
 See `windows/README.md` for known issues with this method.
 
+Run the following from an elevated command line terminal
 ```sh
 sc.exe create njogush start=auto binPath="[PATH_TO_NJOGUSH_CODE]\daphne.bat"
 ```
+
+for example
+```sh
+sc.exe create njogush start=auto binPath="C:\moko\njogush\\daphne.bat"
+```
 For more on `sc.exe` see `https://learn.microsoft.com/en-US/windows-server/administration/windows-commands/sc-create`
+
+To remove service run
+```sh
+sc.exe delete njogush
+```
 
 ## Linux (from the python code)
 ```sh
@@ -95,7 +104,13 @@ systemctl enable daphne_njogush.service
 systemctl restart daphne_njogush.service
 ```
 
-# Technologies
+To remove service run
+```sh
+systemctl disable daphne_njogush.service
+rm  /etc/systemd/system/daphne_njogush.service
+```
+
+# Technologies used in njogush
 | NAME | DESCRIPTION |
 | --- | --- |
 | Poetry | Dependency manager |
