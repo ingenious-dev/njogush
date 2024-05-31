@@ -141,6 +141,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🏁 START OF NON-BOILERPLATE SETTINGS 🏁
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+# os.environ['ALLOWED_HOSTS'] = '.localhost, .herokuapp.com'
+# ALLOWED_HOSTS += config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+allowed_hosts_default = "127.0.0.1, localhost"
+ALLOWED_HOSTS += config('ALLOWED_HOSTS', default=allowed_hosts_default, cast=Csv())
+
 TIME_ZONE = 'Africa/Nairobi' # UTC
 
 # TODO https://docs.djangoproject.com/en/4.0/topics/auth/default/#the-login-required-decorator
@@ -183,6 +190,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 CSRF_TRUSTED_ORIGINS = [
     # 'https://example.com',
 ]
+csrf_trusted_origins_default = ""
+CSRF_TRUSTED_ORIGINS += config('CSRF_TRUSTED_ORIGINS', default=csrf_trusted_origins_default, cast=Csv())
 
 from decouple import config
 from decouple import Csv
