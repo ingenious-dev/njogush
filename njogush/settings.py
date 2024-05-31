@@ -141,6 +141,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🏁 START OF NON-BOILERPLATE SETTINGS 🏁
+from decouple import config
+from decouple import Csv
+
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # os.environ['ALLOWED_HOSTS'] = '.localhost, .herokuapp.com'
@@ -191,10 +194,6 @@ CSRF_TRUSTED_ORIGINS = [
     # 'https://example.com',
 ]
 csrf_trusted_origins_default = ""
-CSRF_TRUSTED_ORIGINS += config('CSRF_TRUSTED_ORIGINS', default=csrf_trusted_origins_default, cast=Csv())
-
-from decouple import config
-from decouple import Csv
 
 # + https://docs.djangoproject.com/en/4.0/topics/email/#module-django.core.mail
 EMAIL_HOST = config('EMAIL_HOST', default='')
