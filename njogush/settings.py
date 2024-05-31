@@ -194,6 +194,7 @@ CSRF_TRUSTED_ORIGINS = [
     # 'https://example.com',
 ]
 csrf_trusted_origins_default = ""
+CSRF_TRUSTED_ORIGINS += config('CSRF_TRUSTED_ORIGINS', default=csrf_trusted_origins_default, cast=Csv())
 
 # + https://docs.djangoproject.com/en/4.0/topics/email/#module-django.core.mail
 EMAIL_HOST = config('EMAIL_HOST', default='')
@@ -230,5 +231,5 @@ REST_FRAMEWORK = {
     ]
 }
 
-CUSTOM_SYSTEM_NAME = 'Njogush'
+CUSTOM_SYSTEM_NAME = config('CUSTOM_SYSTEM_NAME', default='Njogush')
 REMOTE_MODE = config('REMOTE_MODE', default=False, cast=bool) # ! IMPORTANT
