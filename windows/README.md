@@ -11,7 +11,7 @@ Using `sc.exe create njogush start=auto binPath="[PATH_TO_NJOGUSH_CODE]\daphne.b
 ![alt text](./screenshots/Screenshot%202024-05-29%20024506.png)
 ![alt text](./screenshots/Screenshot%202024-05-29%20024538.png)
 
-- Despite not being able to control the service as stated above, It seems to run when tested from the browser on `http://127.0.0.1:6564`. While this is commendable it immediately prevents the issue of how to stop or restart the service when needed since as already indicated it cannot be controlled from the relevant interfaces. You would have to restart the computer.
+- Despite not being able to control the service as stated above, It seems to run when tested from the browser on `http://127.0.0.1:6564`. While this is commendable it immediately presents the issue of how to stop or restart the service when needed since as already indicated it cannot be controlled from the relevant interfaces. You would have to restart the computer.
 
 ## Solution
 A solution for this is proposed here: https://www.coretechnologies.com/blog/windows-services/sc-service-fails-to-start/. See the section `Use a “Service Wrapper” to install a regular program as a Windows Service`

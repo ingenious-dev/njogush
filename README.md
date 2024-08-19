@@ -151,6 +151,23 @@ fvm: command not found
 ```
 The solution is to Call fvm from absolute path for example, `/home/linuxbrew/.linuxbrew/bin/fvm flutter build apk`
 
+## detected dubious ownership in repository
+On windows, this log is seen when running njogush as an automated service (service that start when windows boots up).
+```
+C:\njogush>cd /d "C:\my_flutter_project" & git restore "C:\my_flutter_project\android\app\src"  
+fatal: detected dubious ownership in repository at 'C:/my_flutter_project'
+'C:/my_flutter_project' is owned by:
+    DESKTOP-S6LQ7U5/ADMIN (S-1-5-21-3685671753-1490390355-2425391035-1002)
+but the current user is:
+    NT AUTHORITY/SYSTEM (S-1-5-18)
+To add an exception for this directory, call:
+
+    git config --global --add safe.directory C:/my_flutter_project
+```
+
+The solution in to set njogush service to autostart with the user account that has the required permissions as shown in the scre
+![screen shot of services](./Screenshot%202024-08-19%20210648.png)
+
 # Considerations & Recommendation
 Using django-eventstream
 Providing a export/import functionality & format e.g JSON

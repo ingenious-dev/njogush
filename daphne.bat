@@ -15,7 +15,9 @@ cd /d %SCRIPT_DIR%
 @REM %ar%  -p 6564 njogush.asgi:application
 
 rem Find the python3 executable in the venv directory
-for /r %SCRIPT_DIR%\venv %%i in (python.exe) do set PYTHON_PATH=%%i
+@REM for /r %SCRIPT_DIR%\venv %%i in (python.exe) do set PYTHON_PATH=%%i
+@REM + https://stackoverflow.com/questions/56204703/how-do-you-add-a-variable-to-a-string-in-a-batch-file
+for /r "%SCRIPT_DIR%\venv" %%i in (python.exe) do set PYTHON_PATH=%%i
 
 rem Run the Django server
-%PYTHON_PATH% manage.py runserver 0.0.0.0:6564
+"%PYTHON_PATH%" manage.py runserver 0.0.0.0:6564
