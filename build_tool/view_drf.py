@@ -329,10 +329,19 @@ def cicd_callback(request, source_platform, token):
         if request.method == 'POST':
             github_data = request.data
 
+            escape_double_quotes = json.dumps(github_data).replace('"', '\\"')
             build_data = {
                 'project_id': project.id,
                 'token': User.objects.first().auth_token.key,
-                'command_arguments': json.dumps(github_data)
+                
+                # <<<<<<<<>>>>>>>
+                # causes error since stringified json wrapped in double-quotes is expected
+                # jq: parse error: Invalid numeric literal at line 1, column 4
+                # 'command_arguments': json.dumps(github_data),
+
+                # Solution
+                'command_arguments': f'"{escape_double_quotes}"'
+                # <<<<<<<<>>>>>>>
             }
             
             run_project_build(build_data)
