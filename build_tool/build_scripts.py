@@ -22,7 +22,7 @@ def run_project_build(build_data):
     }
 
     # STEP 4: Run project
-    data = {'action': 'run'}
+    data = {'action': 'run', 'command_arguments': build_data.get('command_arguments', '')}
     r = requests.patch(f'{NJOGUSH_BASE_URL}/api/projects/{project_id}/', data=data, headers=headers_njogush)
     r.raise_for_status()
     build_session = r.json()

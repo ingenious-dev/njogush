@@ -1,5 +1,8 @@
+import json
 
 from django.conf import settings
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -11,6 +14,8 @@ from .models import (Project, Asset, Step, BuildSession)
 from .serializers import (ProjectSerializer, AssetSerializer, StepSerializer, BuildSessionSerializer)
 from .pagination import VariableResultsSetPagination
 from .build_scripts import run_project_build
+
+User = get_user_model()
 
 @api_view(['GET'])
 def dashboard(request):
@@ -96,6 +101,7 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
                 build_serializer = BuildSessionSerializer(build_session)
                 return Response(build_serializer.data)
             
+            # ! TO BE DONE = what was the usecase for this? Can't seem to recall
             if request.data.get('action') == 'build':
 
                 project_id = resource.id
@@ -306,6 +312,29 @@ def github_callback(request, pk, token):
         return Response(request.data, status=status.HTTP_201_CREATED)
         # return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def cicd_callback(request, source_platform, token):
+
+    project = get_object_or_404(Project, token=token)
+
+    if source_platform == 'github':
+        if request.method == 'POST':
+            github_data = request.data
+
+            build_data = {
+                'project_id': project.id,
+                'token': User.first().auth_token.key,
+                'command_arguments': json.dumps(github_data)
+            }
+            
+            run_project_build(build_data)
+            
+            return Response(request.data, status=status.HTTP_201_CREATED)
+            # return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response("Unrecognized 'source_platform'", status=status.HTTP_400_BAD_REQUEST)
+    
 @api_view(['GET'])
 def api_root(request, format=None):
     if not settings.DEBUG:

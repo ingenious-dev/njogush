@@ -64,9 +64,18 @@ class BuildConsumer(WebsocketConsumer):
             self.build_session.save()
 
             try:
-                y['method'](y['step'])
-            except:
-                break
+                # y['method'](y['step'])
+                if y.get('command_arguments'):
+                    y['method'](y['step'], y['command_arguments'])
+                else:
+                    y['method'](y['step'])
+            except Exception as e:
+                try:
+                    stdout = None
+                    stderr = str(e)
+                    self.socket_send(y['step'], stdout, stderr)
+                except:
+                    break
 
         self.send(text_data=json.dumps({"signal": 'finish'}))
                     
@@ -243,7 +252,7 @@ class BuildConsumer(WebsocketConsumer):
 
         self.socket_send(step, stdout, stderr)
 
-    def run_command_non_blocking(self, step):
+    def run_command_non_blocking(self, step, command_arguments=None):
         stdout = ''
         stderr = ''
         self.socket_send(step, stdout, stderr, 'loading')
@@ -255,7 +264,12 @@ class BuildConsumer(WebsocketConsumer):
         ... Additionally, stderr can be STDOUT, which indicates that the stderr data from the applications should be captured into the same file handle as for stdout.
         """
         # self.command_process[f"{step.id}"] = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) # does not well for multiline commands
-        self.command_process[f"{step.id}"] = subprocess.Popen(step.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        # self.command_process[f"{step.id}"] = subprocess.Popen(step.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        if command_arguments:
+            self.command_process[f"{step.id}"] = subprocess.Popen(f"{step.command} --command_arguments {command_arguments}", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        else:
+            self.command_process[f"{step.id}"] = subprocess.Popen(step.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            
         # <<<<<<<<<<>>>>>>>
         # OPTION 1 - not working
         # + https://docs.python.org/3/library/subprocess.html#subprocess.Popen.stderr
@@ -372,7 +386,8 @@ class BuildConsumer(WebsocketConsumer):
             if step.category == 'command':
                 self.thread_sequence[f"{self.command_count}"] = {
                     'method': self.run_command_non_blocking,
-                    'step': step
+                    'step': step,
+                    'command_arguments': self.build_session.command_arguments
                 }
                 
         self.command_threads[f"1"] = threading.Thread(target=self.run_steps_non_blocking)

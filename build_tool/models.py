@@ -7,6 +7,7 @@ class Project(models.Model):
     description = models.TextField(blank=True)
     identifier = models.CharField(max_length=30, unique=True)
     image = models.ImageField(upload_to='project_pic', null=True, blank=True)
+    token = models.TextField(null=True, blank=True, unique=True)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
@@ -57,5 +58,6 @@ class BuildSession(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='build_sessions')
     logs = models.TextField(blank=True)
     current_step = models.ForeignKey(Step, on_delete=models.CASCADE, null=True, blank=True)
+    command_arguments = models.TextField(blank=True)
     date_posted = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
