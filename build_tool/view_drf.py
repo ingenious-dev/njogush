@@ -312,10 +312,10 @@ def github_callback(request, pk, token):
         return Response(request.data, status=status.HTTP_201_CREATED)
         # return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def cicd_callback(request, source_platform, token):
-
+  
     project = get_object_or_404(Project, token=token)
 
     if source_platform == 'github':
