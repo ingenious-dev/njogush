@@ -6,7 +6,7 @@ from .models import (Project, Asset, Step, BuildSession)
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ['id', 'name', 'description', 'identifier', 'image', 'date_posted']
+        fields = ['id', 'name', 'description', 'identifier', 'token', 'image', 'date_posted']
 
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:

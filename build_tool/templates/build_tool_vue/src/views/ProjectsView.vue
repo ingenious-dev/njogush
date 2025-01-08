@@ -77,17 +77,6 @@
                         <div class="divide-y divide-gray-200 px-4 sm:px-6">
                           <div class="space-y-6 pt-6 pb-5">
                             <div>
-                              <label for="project-name" class="block text-sm font-medium text-gray-900">Project Identifier</label>
-                              <div class="mt-1">
-                                <input
-                                type="text"
-                                name="project-identifier"
-                                id="project-identifier"
-                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                v-model="identifier" required />
-                              </div>
-                            </div>
-                            <div>
                               <label for="project-name" class="block text-sm font-medium text-gray-900">Project name</label>
                               <div class="mt-1">
                                 <input
@@ -102,6 +91,28 @@
                               <label for="description" class="block text-sm font-medium text-gray-900">Description</label>
                               <div class="mt-1">
                                 <textarea id="description" name="description" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="description" />
+                              </div>
+                            </div>
+                            <div>
+                              <label for="project-identifier" class="block text-sm font-medium text-gray-900">Project Identifier</label>
+                              <div class="mt-1">
+                                <input
+                                type="text"
+                                name="project-identifier"
+                                id="project-identifier"
+                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                v-model="identifier" required />
+                              </div>
+                            </div>
+                            <div>
+                              <label for="project-token" class="block text-sm font-medium text-gray-900">Project Token</label>
+                              <div class="mt-1">
+                                <input
+                                type="text"
+                                name="project-token"
+                                id="project-token"
+                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                v-model="token" />
                               </div>
                             </div>
                           </div>
@@ -325,9 +336,10 @@ export default {
       open: false,
       selectedId: null,
       errors: [],
-      identifier: '',
       name: '',
       description: '',
+      identifier: '',
+      token: null,
       openModal: false,
       openModalError: false,
       modalErrorMessage: '',
@@ -375,15 +387,17 @@ export default {
       this.open = false
     },
     setForm(item) {
-      this.identifier = item.identifier;
       this.name = item.name;
       this.description = item.description;
+      this.identifier = item.identifier;
+      this.token = item.token;
     },
     async save() {
       const data = {
-        identifier: this.identifier,
         name: this.name,
         description: this.description,
+        identifier: this.identifier,
+        token: this.token,
       }
       
       if(this.selectedId) {
