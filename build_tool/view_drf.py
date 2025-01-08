@@ -324,7 +324,7 @@ def cicd_callback(request, source_platform, token):
 
             build_data = {
                 'project_id': project.id,
-                'token': User.first().auth_token.key,
+                'token': User.obects.first().auth_token.key,
                 'command_arguments': json.dumps(github_data)
             }
             
