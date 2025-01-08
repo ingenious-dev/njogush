@@ -87,41 +87,48 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
         resource = self.get_object() # + https://www.django-rest-framework.org/api-guide/generic-views/#get_objectself
         serializer = self.get_serializer_class()(resource, data=request.data, partial=True) # + https://www.django-rest-framework.org/api-guide/serializers/#partial-updates
         if serializer.is_valid():
-            resource.status = request.data.get('action')
+            action = request.data.get('action')
+            if action:
+                resource.status = action
 
-            if request.data.get('action') == 'run':
-                host = request.get_host()
-                if '127.0.0.1' not in host and 'localhost' not in host:
-                    if not settings.REMOTE_MODE:
-                        raise ValidationError('Remote executions are not allowed.')
-                    
-                build_session = BuildSession.objects.create(
-                    project = resource,
-                )
-                build_serializer = BuildSessionSerializer(build_session)
-                return Response(build_serializer.data)
-            
-            # ! TO BE DONE = what was the usecase for this? Can't seem to recall
-            if request.data.get('action') == 'build':
+                if action == 'run':
+                    host = request.get_host()
+                    if '127.0.0.1' not in host and 'localhost' not in host:
+                        if not settings.REMOTE_MODE:
+                            raise ValidationError('Remote executions are not allowed.')
+                        
+                    build_session = BuildSession.objects.create(
+                        project = resource,
+                    )
 
-                project_id = resource.id
-                build_data = {
-                    'project_id': project_id,
-                    "token": request.user.auth_token.key,
-                }
+                    command_arguments = request.data.get('command_arguments')
+                    if command_arguments:
+                        build_session.command_arguments = command_arguments
+                        build_session.save()
+
+                    build_serializer = BuildSessionSerializer(build_session)
+                    return Response(build_serializer.data)
                 
-                run_project_build(build_data)
- 
-            if request.data.get('action') == 'reconfigure':
-                Asset.objects.filter(project=resource).delete()
-                Step.objects.filter(project=resource).delete()
-                # resource.build_sessions.delete()
-                # TO BE DONE - which build_session again?
-                # self.build_session.logs = ''
-                # self.build_session.current_step = None
-                # self.build_session.save()
-            
-            if request.data.get('action'):
+                # ! TO BE DONE = what was the usecase for this? Can't seem to recall
+                if action == 'build':
+
+                    project_id = resource.id
+                    build_data = {
+                        'project_id': project_id,
+                        "token": request.user.auth_token.key,
+                    }
+                    
+                    run_project_build(build_data)
+    
+                if action == 'reconfigure':
+                    Asset.objects.filter(project=resource).delete()
+                    Step.objects.filter(project=resource).delete()
+                    # resource.build_sessions.delete()
+                    # TO BE DONE - which build_session again?
+                    # self.build_session.logs = ''
+                    # self.build_session.current_step = None
+                    # self.build_session.save()
+                
                 resource.save()
             else:
                 serializer.save()
