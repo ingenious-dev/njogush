@@ -293,28 +293,41 @@ class BuildConsumer(WebsocketConsumer):
             'step': StepSerializer(step).data
         }
         
-        # <<<<<>>>>
-        if stdout:
-            self.build_session.logs += stdout
-            self.build_session.save()
-            self.send(text_data=json.dumps({"logs": stdout}))
+        try:
+            # <<<<<>>>>
+            if stdout:
+                self.build_session.logs += stdout
+                self.build_session.save()
+                self.send(text_data=json.dumps({"logs": stdout}))
 
-            report_data['status'] = 'success'
-            self.send(text_data=json.dumps({"report": report_data}))
+                report_data['status'] = 'success'
+                self.send(text_data=json.dumps({"report": report_data}))
 
-        if stderr:
-            self.build_session.logs += stderr
-            self.build_session.save()
-            self.send(text_data=json.dumps({"logs": stderr}))
+            if stderr:
+                self.build_session.logs += stderr
+                self.build_session.save()
+                self.send(text_data=json.dumps({"logs": stderr}))
 
-            report_data['status'] = 'failure'
-            self.send(text_data=json.dumps({"report": report_data}))
-            # break
-            raise Exception
-        
-        if default_status:
-            report_data['status'] = default_status
-            self.send(text_data=json.dumps({"report": report_data}))
+                report_data['status'] = 'failure'
+                self.send(text_data=json.dumps({"report": report_data}))
+                # break
+                raise Exception
+            
+            if default_status:
+                report_data['status'] = default_status
+                self.send(text_data=json.dumps({"report": report_data}))
+        except Exception as e:
+            # The message "Attempt to send on a closed protocol"
+            # was observed when using CI/CD callback function.
+            # This was probably due to the connection being closed by
+            # the webhook server after sending the data.
+            # To keep the websocket event loop (since it serving as a task queue)
+            # we check for that specific error.
+            # + https://stackoverflow.com/questions/62847184/disconnect-method-of-django-channels-websocketconsumer-not-being-called
+            if "closed protocol" in str(e):
+                return
+            
+            raise e
     
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
