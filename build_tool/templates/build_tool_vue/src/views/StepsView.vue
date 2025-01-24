@@ -550,7 +550,7 @@ export default {
       this.excerpt_start = item.excerpt_start;
       this.excerpt_end = item.excerpt_end;
       this.command = item.command;
-      this.use_command_arguements = item.use_command_arguements;
+      this.use_command_arguements = item.use_command_arguements ?? true;
       this.is_suspended = item.is_suspended;
     },
     async save() {
