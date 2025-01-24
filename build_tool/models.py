@@ -47,7 +47,8 @@ class Step(models.Model):
     excerpt_end = models.CharField(max_length=100, blank=True)
     # COMMAND
     command = models.TextField(blank=True)
-    
+    use_command_arguements = models.BooleanField(default=True)
+
     is_suspended = models.BooleanField(default=False)
     date_posted = models.DateTimeField(auto_now_add=True)
 

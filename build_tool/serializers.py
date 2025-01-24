@@ -17,7 +17,8 @@ class StepSerializer(serializers.ModelSerializer):
     class Meta:
         model = Step
         fields = ['id', 'project', 'name', 'description', 'rank', 'category',
-        'folder', 'file_path', 'asset', 'excerpt', 'excerpt_start', 'excerpt_end', 'command',
+        'folder', 'file_path', 'asset', 'excerpt', 'excerpt_start', 'excerpt_end',
+        'command', 'use_command_arguements',
         'is_suspended', 'date_posted']
 
 class BuildSessionSerializer(serializers.ModelSerializer):

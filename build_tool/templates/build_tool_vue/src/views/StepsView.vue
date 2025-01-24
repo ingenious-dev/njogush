@@ -31,6 +31,9 @@
                           {{ item.category.toUpperCase() }}
                         </p>
                       </div>
+                      <div class="mt-2" v-if="item.is_suspended">
+                        <span class="inline-flex items-center rounded-full bg-pink-100 px-2.5 py-0.5 text-xs font-medium text-pink-800">SUSPENDED</span>
+                      </div>
                       <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                         <!-- Heroicon name: mini/calendar -->
                         <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -61,24 +64,58 @@
               <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
                 <DialogPanel class="pointer-events-auto w-screen max-w-md">
                   <form class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl" @submit.prevent="checkForm()">
-                    <div class="h-0 flex-1 overflow-y-auto">
-                      <div class="bg-indigo-700 py-6 px-4 sm:px-6">
-                        <div class="flex items-center justify-between">
-                          <DialogTitle class="text-lg font-medium text-white">{{ newOrEdit }} Step</DialogTitle>
-                          <div class="ml-3 flex h-7 items-center">
-                            <button type="button" class="rounded-md bg-indigo-700 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white" @click="open = false">
-                              <span class="sr-only">Close panel</span>
-                              <XMarkIcon class="h-6 w-6" aria-hidden="true" />
-                            </button>
+                    <div class="h-0 flex-1 flex flex-col overflow-y-auto">
+
+                      <div class="relative border-b border-gray-200 pb-5 sm:pb-0 pt-6 px-4 sm:px-6">
+                          <div class="md:flex md:items-center md:justify-between">
+                              <!-- <h3 class="text-lg font-medium leading-6 text-gray-900">Candidates</h3> -->
+                              <p class="text-sm text-gray-900">Fill in the information below to {{ this.selectedId ? "update" : "create" }} step.</p>
+                              <!-- <div class="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0">
+                                  <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Share</button>
+                                  <button type="button" class="ml-3 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Create</button>
+                              </div> -->
                           </div>
-                        </div>
-                        <div class="mt-1">
-                          <p class="text-sm text-indigo-300">Fill in the information below to {{ newOrEdit }} your new project.</p>
-                        </div>
+                          <div class="mt-4 flex justify-between">
+                              <div class="sm:hidden">
+                                  <label for="current-tab" class="sr-only">Select a tab</label>
+                                  <select id="current-tab" name="current-tab"
+                                      class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                      v-model="selectedTab">
+                                      <option v-for="tab in tabs" :key="tab">{{ tab }}</option>
+                                  </select>
+                              </div>
+                              <div class="hidden sm:block">
+                                  <nav class="-mb-px flex space-x-8">
+                                  <a v-for="tab in tabs" :key="tab" href="#"
+                                      :class="[tab == selectedTab ?
+                                      'border-indigo-500 text-indigo-600'
+                                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm']"
+                                      :aria-current="tab ? 'page' : undefined"
+                                      @click="(e) => { e.preventDefault(); selectedTab = tab; }">{{ tab }}</a>
+                                  </nav>
+                              </div>
+                              <div class="ml-3 flex h-7 items-center">
+                                  <button type="button" class="rounded-md bg-indigo-700 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white" @click="closeSideBar">
+                                      <span class="sr-only">Close panel</span>
+                                      <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+                                  </button>
+                              </div>
+                          </div>
                       </div>
+
                       <div class="flex flex-1 flex-col justify-between">
-                        <div class="divide-y divide-gray-200 px-4 sm:px-6">
-                          <div class="space-y-6 pt-6 pb-5">
+                        <div v-if="selectedTab == 'Details'" class="divide-y divide-gray-200 px-4 sm:px-6">
+                          <div class="space-y-6 pt-6 pb-5 h-full">
+
+                            <div class="relative flex items-start">
+                              <div class="flex h-5 items-center">
+                                <input v-model="is_suspended" id="is_suspended" name="is_suspended" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                              </div>
+                              <div class="ml-3 text-sm">
+                                <label for="is_suspended" class="font-medium text-gray-700">Suspended</label>
+                                <p class="text-gray-500">Step will not be run. It will be skipped.</p>
+                              </div>
+                            </div>
                             <div>
                               <label for="project-name" class="block text-sm font-medium text-gray-900">Step name</label>
                               <div class="mt-1">
@@ -107,6 +144,11 @@
                                 v-model="rank" required />
                               </div>
                             </div>
+
+                          </div>
+                        </div>
+                        <div v-if="selectedTab == 'Category'" class="divide-y divide-gray-200 px-4 sm:px-6 h-full">
+                          <div class="space-y-6 pt-6 pb-5 h-full flex flex-col">
 
                             <div>
                               <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
@@ -145,13 +187,13 @@
                                 </div>
                               </div>
                               <div>
-                                  <label for="asset" class="block text-sm font-medium text-gray-700">Asset</label>
-                                  <div class="mt-1">
-                                    <select id="asset" name="asset" autocomplete="asset-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="asset" required>
-                                      <option v-for="item in assets" :key="item.id" :value="item.id">{{ item.name }}</option>
-                                    </select>
-                                  </div>
+                                <label for="asset" class="block text-sm font-medium text-gray-700">Asset</label>
+                                <div class="mt-1">
+                                  <select id="asset" name="asset" autocomplete="asset-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="asset" required>
+                                    <option v-for="item in assets" :key="item.id" :value="item.id">{{ item.name }}</option>
+                                  </select>
                                 </div>
+                              </div>
                             </div>
                             <div v-if="category === 'excerpt'">
                               <div>
@@ -194,11 +236,20 @@
                                 </div>
                               </div>
                             </div>
-                            <div v-if="category === 'command'">
-                              <div>
+                            <div v-if="category === 'command'" class="space-y-6 flex-1 flex flex-col">
+                              <div class="relative flex items-start">
+                                <div class="flex h-5 items-center">
+                                  <input v-model="use_command_arguements" id="use_command_arguements" name="use_command_arguements" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                </div>
+                                <div class="ml-3 text-sm">
+                                  <label for="use_command_arguements" class="font-medium text-gray-700">Use command arguments</label>
+                                  <p class="text-gray-500">Arguments will be passed to command</p>
+                                </div>
+                              </div>
+                              <div class="flex-1 flex flex-col">
                                 <label for="command" class="block text-sm font-medium text-gray-900">command</label>
-                                <div class="mt-1">
-                                  <textarea id="command" name="command" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" v-model="command" required />
+                                <div class="mt-1 flex-1">
+                                  <textarea id="command" name="command" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-full" v-model="command" required />
                                 </div>
                               </div>
                             </div>
@@ -434,10 +485,18 @@ export default {
       excerpt_start: '',
       excerpt_end: '',
       command: '',
+      use_command_arguements: true,
+      is_suspended: false,
+
       openModal: false,
       openModalError: false,
       modalErrorMessage: '',
       selectedId: null,
+
+      tabs: [
+        "Details", "Category",
+      ],
+      selectedTab: "Details",
     }
   },
   computed: {
@@ -474,6 +533,7 @@ export default {
         this.setForm({})
       }
       this.open = true
+      this.selectedTab = "Details"
     },
     closeSideBar(id) {
       this.open = false
@@ -490,6 +550,8 @@ export default {
       this.excerpt_start = item.excerpt_start;
       this.excerpt_end = item.excerpt_end;
       this.command = item.command;
+      this.use_command_arguements = item.use_command_arguements;
+      this.is_suspended = item.is_suspended;
     },
     async save() {
       const data = {
@@ -505,6 +567,8 @@ export default {
         excerpt_start: this.excerpt_start,
         excerpt_end: this.excerpt_end,
         command: this.command,
+        use_command_arguements: this.use_command_arguements,
+        is_suspended: this.is_suspended,
       }
       
       if(this.selectedId) {
