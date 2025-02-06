@@ -31,8 +31,13 @@
                           {{ item.category.toUpperCase() }}
                         </p>
                       </div>
-                      <div class="mt-2" v-if="item.is_suspended">
-                        <span class="inline-flex items-center rounded-full bg-pink-100 px-2.5 py-0.5 text-xs font-medium text-pink-800">SUSPENDED</span>
+                      <div>
+                        <div class="mt-1" v-if="item.use_command_arguements">
+                          <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">USE ARGUEMENTS</span>
+                        </div>
+                        <div v-if="item.is_suspended">
+                          <span class="inline-flex items-center rounded-full bg-pink-100 px-2.5 py-0.5 text-xs font-medium text-pink-800">SUSPENDED</span>
+                        </div>
                       </div>
                       <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                         <!-- Heroicon name: mini/calendar -->

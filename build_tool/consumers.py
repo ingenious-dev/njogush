@@ -400,7 +400,7 @@ class BuildConsumer(WebsocketConsumer):
                 self.thread_sequence[f"{self.command_count}"] = {
                     'method': self.run_command_non_blocking,
                     'step': step,
-                    'command_arguments': self.build_session.command_arguments
+                    'command_arguments': self.build_session.command_arguments if step.use_command_arguements else None
                 }
                 
         self.command_threads[f"1"] = threading.Thread(target=self.run_steps_non_blocking)
