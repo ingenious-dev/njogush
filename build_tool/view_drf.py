@@ -328,12 +328,13 @@ def cicd_callback(request, source_platform, token):
     if source_platform == 'github':
         if request.method == 'POST':
             github_data = request.data
-            print(github_data)
 
             if hasattr(github_data, "payload"):
-                escape_double_quotes = github_data.get("payload").replace('"', '\\"')
+                escape_double_quotes = json.dumps(github_data.get("payload")[0]).replace('"', '\\"')
             else:
                 escape_double_quotes = json.dumps(github_data).replace('"', '\\"')
+
+            print(escape_double_quotes)
 
             build_data = {
                 'project_id': project.id,
