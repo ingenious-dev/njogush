@@ -329,8 +329,11 @@ def cicd_callback(request, source_platform, token):
         if request.method == 'POST':
             github_data = request.data
 
-            if hasattr(github_data, "payload"):
-                escape_double_quotes = json.dumps(github_data.get("payload")[0]).replace('"', '\\"')
+            payload = github_data.get("payload")
+            # + application/x-www-form-urlencoded
+            if payload:
+                escape_double_quotes = payload[0].replace('"', '\\"')
+            # + application/json
             else:
                 escape_double_quotes = json.dumps(github_data).replace('"', '\\"')
 
