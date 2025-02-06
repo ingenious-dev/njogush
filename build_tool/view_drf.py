@@ -332,7 +332,7 @@ def cicd_callback(request, source_platform, token):
             payload = github_data.get("payload")
             # + application/x-www-form-urlencoded
             if payload:
-                escape_double_quotes = payload[0].replace('"', '\\"')
+                escape_double_quotes = payload.replace('"', '\\"')
             # + application/json
             else:
                 escape_double_quotes = json.dumps(github_data).replace('"', '\\"')
