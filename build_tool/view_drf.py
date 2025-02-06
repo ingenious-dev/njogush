@@ -334,6 +334,8 @@ def cicd_callback(request, source_platform, token):
             else:
                 escape_double_quotes = json.dumps(github_data).replace('"', '\\"')
 
+            print(github_data)
+            print("XXXXXXXXXXX")
             print(escape_double_quotes)
 
             build_data = {
