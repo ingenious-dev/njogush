@@ -159,10 +159,6 @@ class BuildConsumer(WebsocketConsumer):
             try:
                 # TODO https://stackoverflow.com/questions/2769061/how-to-erase-the-file-contents-of-text-file-in-python/2769090#2769090
                 open(new_filename, 'w').close()
-            except:
-                pass
-            
-            try:
 
                 with open(filename, "r") as prev_file, open(new_filename, "w") as new_file:
                     prev_contents = prev_file.readlines()
