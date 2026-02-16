@@ -330,12 +330,29 @@ def cicd_callback(request, source_platform, token):
             github_data = request.data
 
             payload = github_data.get("payload")
+            # <<<<<<<<<>>>>>>>>>
+            # OPTION 1:
+            # SUPENDED: running failed for commit with double quotes (") in messsage
+            # For example: use "SelectPages" instead of "selectPages" to fix error when building in ubuntu
+            # https://github.com/ingenious-dev/ohala_lite_mobile_flutter/commit/1d1a6ca2898b69de7aca323bedcb4ead816f75e2
+
+            # # + application/x-www-form-urlencoded
+            # if payload:
+            #     escape_double_quotes = payload.replace('"', '\\"')
+            # # + application/json
+            # else:
+            #     escape_double_quotes = json.dumps(github_data).replace('"', '\\"')
+            # <<<<<<<<<>>>>>>>>>
+
+            # <<<<<<<<<>>>>>>>>>
+            # OPTION 2:
             # + application/x-www-form-urlencoded
             if payload:
-                escape_double_quotes = payload.replace('"', '\\"')
+                escape_double_quotes = json.dumps(payload)
             # + application/json
             else:
-                escape_double_quotes = json.dumps(github_data).replace('"', '\\"')
+                escape_double_quotes = json.dumps(json.dumps(github_data))
+            # <<<<<<<<<>>>>>>>>>
 
             build_data = {
                 'project_id': project.id,
@@ -347,7 +364,8 @@ def cicd_callback(request, source_platform, token):
                 # 'command_arguments': json.dumps(github_data),
 
                 # Solution
-                'command_arguments': f'"{escape_double_quotes}"'
+                # 'command_arguments': f'"{escape_double_quotes}"' # For OPTION 1 above
+                'command_arguments': escape_double_quotes # For OPTION 2 above
                 # <<<<<<<<>>>>>>>
             }
             
