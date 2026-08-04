@@ -139,6 +139,13 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         instance = serializer.save()
 
+    def perform_destroy(self, instance):
+        # instance.delete()
+
+        if instance.image:
+            instance.image.delete()
+        instance.delete()
+
 # ! ASSET
 class AssetList(generics.ListCreateAPIView):
     """
@@ -195,6 +202,13 @@ class AssetDetail(generics.RetrieveUpdateDestroyAPIView):
             resource.file.delete()
             
         instance = serializer.save()
+
+    def perform_destroy(self, instance):
+        # instance.delete()
+
+        if instance.file:
+            instance.file.delete()
+        instance.delete()
 
 # ! STEP
 class StepList(generics.ListCreateAPIView):
