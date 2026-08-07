@@ -10,6 +10,9 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.exceptions import PermissionDenied, ParseError, ValidationError
 
+import json
+from pathlib import Path
+
 from .models import (Project, Asset, Step, BuildSession)
 from .serializers import (ProjectSerializer, AssetSerializer, StepSerializer, BuildSessionSerializer)
 from .pagination import VariableResultsSetPagination
@@ -143,7 +146,14 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
         # instance.delete()
 
         if instance.image:
-            instance.image.delete()
+            file_path = Path(instance.image.path)
+
+            if file_path.is_file():
+                print("The file exists.")
+                instance.image.delete()
+            else:
+                print("The file does not exist.")
+
         instance.delete()
 
 # ! ASSET
@@ -207,7 +217,14 @@ class AssetDetail(generics.RetrieveUpdateDestroyAPIView):
         # instance.delete()
 
         if instance.file:
-            instance.file.delete()
+            file_path = Path(instance.file.path)
+
+            if file_path.is_file():
+                print("The file exists.")
+                instance.file.delete()
+            else:
+                print("The file does not exist.")
+
         instance.delete()
 
 # ! STEP
