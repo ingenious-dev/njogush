@@ -40,11 +40,39 @@
                   </li>
                 </ul>
                 
-                
               </div>
             </div>
           </div>
         </div>
+
+        <nav class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6" aria-label="Pagination">
+          <div class="hidden sm:block">
+            <p class="text-sm text-gray-700">
+              Showing
+              {{ ' ' }}
+              <span class="font-medium">{{ startIndex }}</span>
+              {{ ' ' }}
+              to
+              {{ ' ' }}
+              <span class="font-medium">{{ endIndex }}</span>
+              {{ ' ' }}
+              of
+              {{ ' ' }}
+              <span class="font-medium">{{ count }}</span>
+              {{ ' ' }}
+              results
+            </p>
+          </div>
+          <div class="flex flex-1 justify-between sm:justify-end">
+            <button class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="!previous"
+              @click.prevent="openPage(previous)">Previous</button>
+            <button class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="!next"
+              @click.prevent="openPage(next)">Next</button>
+          </div>
+        </nav>
+
       </div>
     </div>
     
@@ -320,7 +348,7 @@ export default {
   // and will be exposed on `this`.
   data() {
     return {
-      count: 0,
+      // count: 0,
       people: [
         {
           name: 'Lindsay Walton',
@@ -361,19 +389,38 @@ export default {
     },
     newOrEdit() {
       return this.selectedId ? 'Edit' : 'New';
-    }
+    },
+
+    count() {
+      // `this` points to the component instance
+      return this.$store.state.projects.count;
+    },
+    previous() {
+      // `this` points to the component instance
+      return this.$store.state.projects.previous;
+    },
+    next() {
+      // `this` points to the component instance
+      return this.$store.state.projects.next;
+    },
+    startIndex() {
+      return (this.previous * 10) + 1;
+    },
+    endIndex() {
+      return Math.min((this.previous * 10) + 10, this.count);
+    },
   },
 
   // Methods are functions that mutate state and trigger updates.
   // They can be bound as event handlers in templates.
   methods: {
-    increment() {
-      this.count++
-    },
-    increment() {
-      this.$store.commit('increment')
-      console.log(this.$store.state.count)
-    },
+    // increment() {
+    //   this.count++
+    // },
+    // increment() {
+    //   this.$store.commit('increment')
+    //   console.log(this.$store.state.count)
+    // },
     openSideBar(id) {
       this.selectedId = id;
       if(id) {
@@ -432,6 +479,9 @@ export default {
 
       this.openModalError = true;
       // this.modalErrorMessage = 'Chat socket closed unexpectedly'
+    },
+    openPage(page) {
+      this.$store.dispatch('fetchProjects', {page: page});
     }
   },
 
@@ -440,7 +490,8 @@ export default {
   // This function will be called when the component is mounted.
   mounted() {
     // console.log(`The initial count is ${this.count}.`)
-    this.$store.dispatch('fetchProjects', {limit: 1000});
+    // this.$store.dispatch('fetchProjects', {limit: 1000});
+    this.$store.dispatch('fetchProjects', {});
   }
 }
 </script>

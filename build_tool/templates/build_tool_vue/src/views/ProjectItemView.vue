@@ -346,9 +346,12 @@ export default {
       // return this.$store.state.projects;
       return this.$store.getters.projects;
     },
+    // currentProject() {
+    //   console.log(this.projects.find(element => element.id === this.selectedId))
+    //   return this.projects.find(element => element.id === this.selectedId);
+    // },
     currentProject() {
-      console.log(this.projects.find(element => element.id === this.selectedId))
-      return this.projects.find(element => element.id === this.selectedId);
+      return this.$store.state.projects.currentProject;
     },
     newOrEdit() {
       return this.selectedId ? 'Edit' : 'New';
@@ -423,9 +426,10 @@ export default {
   // This function will be called when the component is mounted.
   mounted() {
     // console.log(`The initial count is ${this.count}.`)
-    if(!this.projects.length) {
-      this.$store.dispatch('fetchProjects', {});
-    }
+    // if(!this.projects.length) {
+    //   this.$store.dispatch('fetchProjects', {});
+    // }
+    this.$store.dispatch('getProject', {id: this.selectedId});
   }
 }
 </script>

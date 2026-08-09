@@ -10,7 +10,12 @@ import store from '.';
 
 const buildSessions = {
     state: () => ({
-        buildSessions: []
+        buildSessions: [],
+
+        count: 0,
+        isLoading: false,
+        next: null,
+        previous: null,
     }),
     mutations: {
         addBuildSessions(state, payload) {
@@ -47,7 +52,33 @@ const buildSessions = {
             // console.log(array);
 
             state.buildSessions = array;
-        }
+        },
+
+        processResponse(state, payload) {
+            // handle success
+            console.log(payload);
+
+            state.buildSessions = payload.results
+
+            var next = null
+            if(payload.next) {
+                // next = new URLSearchParams(payload.next).get('page')
+
+                const url = new URL(payload.next)
+                next = url.searchParams.get("page")
+            }
+            var previous = null
+            if(payload.previous) {
+                // previous = new URLSearchParams(payload.previous).get('page') ?? 1
+
+                const url = new URL(payload.previous)
+                previous = url.searchParams.get("page") ?? 1
+            }
+
+            state.count = payload.count;
+            state.next = next;
+            state.previous = previous;
+        },
     },
     getters: {
         buildSessions (state) {
@@ -58,13 +89,19 @@ const buildSessions = {
         fetchBuildSessions ({ commit, state }, payload) {            
             // Make a request for a user with a given ID
             fetchBuildSessions(payload)
+                // .then(function (data) {
+                //     // handle success
+                //     console.log(data);
+
+                //     commit('addBuildSessions', {
+                //         buildSessions: data.results
+                //     })
+                // })
                 .then(function (data) {
                     // handle success
-                    console.log(data);
+                    // console.log(data);
 
-                    commit('addBuildSessions', {
-                        buildSessions: data.results
-                    })
+                    commit('processResponse', data)
                 })
                 .catch(function (error) {
                     // handle error

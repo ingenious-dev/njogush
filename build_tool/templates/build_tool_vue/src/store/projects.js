@@ -12,6 +12,12 @@ const projects = {
     state: () => ({
         projects: [],
         build_sessions: {},
+        currentProject: null,
+
+        count: 0,
+        isLoading: false,
+        next: null,
+        previous: null,
     }),
     mutations: {
         addProjects(state, payload) {
@@ -52,8 +58,36 @@ const projects = {
         },
         setBuildSession(state, payload) {
             state.build_sessions[payload.project] = payload;
-        }
+        },
 
+        processResponse(state, payload) {
+            // handle success
+            console.log(payload);
+
+            state.projects = payload.results
+
+            var next = null
+            if(payload.next) {
+                // next = new URLSearchParams(payload.next).get('page')
+
+                const url = new URL(payload.next)
+                next = url.searchParams.get("page")
+            }
+            var previous = null
+            if(payload.previous) {
+                // previous = new URLSearchParams(payload.previous).get('page') ?? 1
+
+                const url = new URL(payload.previous)
+                previous = url.searchParams.get("page") ?? 1
+            }
+
+            state.count = payload.count;
+            state.next = next;
+            state.previous = previous;
+        },
+        setCurrentProject(state, payload) {
+            state.currentProject = payload;
+        }
     },
     getters: {
         projects (state) {
@@ -64,13 +98,19 @@ const projects = {
         fetchProjects ({ commit, state }, payload) {            
             // Make a request for a user with a given ID
             fetchProjects(payload)
+                // .then(function (data) {
+                //     // handle success
+                //     console.log(data);
+
+                //     commit('addProjects', {
+                //         projects: data.results
+                //     })
+                // })
                 .then(function (data) {
                     // handle success
-                    console.log(data);
+                    // console.log(data);
 
-                    commit('addProjects', {
-                        projects: data.results
-                    })
+                    commit('processResponse', data)
                 })
                 .catch(function (error) {
                     // handle error
@@ -89,6 +129,7 @@ const projects = {
                     console.log(data);
 
                     commit('updateProject', data)
+                    commit('setCurrentProject', data)
                 })
                 .catch(function (error) {
                     // handle error

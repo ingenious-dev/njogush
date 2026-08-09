@@ -38,6 +38,33 @@
             </tr>
           </tbody>
         </table>
+        <nav class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6" aria-label="Pagination">
+          <div class="hidden sm:block">
+            <p class="text-sm text-gray-700">
+              Showing
+              {{ ' ' }}
+              <span class="font-medium">{{ startIndex }}</span>
+              {{ ' ' }}
+              to
+              {{ ' ' }}
+              <span class="font-medium">{{ endIndex }}</span>
+              {{ ' ' }}
+              of
+              {{ ' ' }}
+              <span class="font-medium">{{ count }}</span>
+              {{ ' ' }}
+              results
+            </p>
+          </div>
+          <div class="flex flex-1 justify-between sm:justify-end">
+            <button class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="!previous"
+              @click.prevent="openPage(previous)">Previous</button>
+            <button class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="!next"
+              @click.prevent="openPage(next)">Next</button>
+          </div>
+        </nav>
       </div>
     </section>
     
@@ -246,7 +273,7 @@ export default {
   // and will be exposed on `this`.
   data() {
     return {
-      count: 0,
+      // count: 0,
       people: [
         {
           name: 'Lindsay Walton',
@@ -286,6 +313,25 @@ export default {
       // `this` points to the component instance
       // return this.$store.state.assets;
       return this.$store.getters.assets;
+    },
+
+    count() {
+      // `this` points to the component instance
+      return this.$store.state.buildSessions.count;
+    },
+    previous() {
+      // `this` points to the component instance
+      return this.$store.state.buildSessions.previous;
+    },
+    next() {
+      // `this` points to the component instance
+      return this.$store.state.buildSessions.next;
+    },
+    startIndex() {
+      return (this.previous * 10) + 1;
+    },
+    endIndex() {
+      return Math.min((this.previous * 10) + 10, this.count);
     },
   },
 
@@ -330,6 +376,9 @@ export default {
     navigate(project, build) {
       // object with path
       this.$router.push({ path: `/projects/${project}/build/${build}` })
+    },
+    openPage(page) {
+      this.$store.dispatch('fetchBuildSessions', {project: this.projectId, page: page});
     }
   },
 
@@ -338,7 +387,8 @@ export default {
   // This function will be called when the component is mounted.
   mounted() {
     // console.log(`The initial count is ${this.count}.`)
-    this.$store.dispatch('fetchBuildSessions', {project: this.projectId, limit: 1000});
+    // this.$store.dispatch('fetchBuildSessions', {project: this.projectId, limit: 1000});
+    this.$store.dispatch('fetchBuildSessions', {project: this.projectId});
   }
 }
 </script>
